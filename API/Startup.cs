@@ -54,7 +54,7 @@ namespace API
           });
         });
 
-       // bolja izzvedba
+       // bolja izvedba
        services.AddMediatR(typeof(List.Handler).Assembly);
     }
 

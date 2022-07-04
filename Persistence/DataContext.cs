@@ -17,6 +17,7 @@ namespace Persistence
 
         }
 
+        // Ovdje je setirana baza
         public  DbSet<Activity> ActivitiesTable { get; set; }
 
     }
