@@ -13,26 +13,30 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ActivitiesTableController : ControllerBase
+    // 06 public class ActivitiesTableController : ControllerBase
+    public class ActivitiesTableController : BaseApiController
     {
-        private readonly IMediator _mediator;
+       
+        // 06  private readonly IMediator _mediator;
 
-        // 01 private readonly DataContext _context;
+        // 06 // 01 private readonly DataContext _context;
 
-        // 01 public ActivitiesTableController(DataContext context)
-        public ActivitiesTableController(IMediator mediator)
-        {
-            _mediator = mediator;
-            //  01 _context = context;
-        }
+        // 06  // 01 public ActivitiesTableController(DataContext context)
+        // 06 public ActivitiesTableController(IMediator mediator)
+        // 06  {
+        // 06    _mediator = mediator;
+        //    //  01 _context = context;
+        // 06 }
   
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
 
-            // 01 return await _context.ActivitiesTable.ToListAsync();
+           // 01 return await _context.ActivitiesTable.ToListAsync();
 
-            return await _mediator.Send(new List.Query());
+           // 06 return await _mediator.Send(new List.Query());
+
+            return await MediatorServis.Send(new List.Query());
 
         }
 
