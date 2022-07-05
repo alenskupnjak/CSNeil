@@ -52,9 +52,9 @@ namespace API.Controllers
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateActivitiy([FromBody]Activity activity)
+    public async Task<IActionResult> CreateActivitiy([FromBody] Activity activity)
     {
-      return Ok(await MediatorServis.Send(new Create.Command { Activity = activity}));
+      return Ok(await MediatorServis.Send(new Create.Command { Activity = activity }));
     }
 
     [HttpPut("{id}")]
@@ -65,5 +65,12 @@ namespace API.Controllers
     }
 
 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteActivity(Guid id)
+    {
+      return Ok(await MediatorServis.Send(new Delete.Command { Id = id }));
     }
+
+
+  }
 }

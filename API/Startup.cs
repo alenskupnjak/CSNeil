@@ -13,7 +13,7 @@ using Persistence;
 
 namespace API
 {
-    public class Startup
+  public class Startup
   {
     private readonly IConfiguration _config;
 
@@ -45,15 +45,15 @@ namespace API
         {
           opt.AddPolicy("CorsPolicy", policy =>
           {
-              policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
           });
         });
 
-       // bolja izvedba
+      // bolja izvedba
       services.AddMediatR(typeof(List.Handler).Assembly);
-        services.AddAutoMapper(typeof(MappingProfiles).Assembly);  
+      services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
-        
+
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,10 +70,10 @@ namespace API
 
       app.UseRouting();
 
-            // mora biti iza routing !!
-            app.UseCors("CorsPolicy");
+      // mora biti iza routing !!
+      app.UseCors("CorsPolicy");
 
-            app.UseAuthorization();
+      app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
