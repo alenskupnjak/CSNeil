@@ -1,6 +1,7 @@
+import { Fragment } from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { List } from 'semantic-ui-react';
+import { Container, List } from 'semantic-ui-react';
 import NavBar from './NavBar';
 
 function App() {
@@ -17,14 +18,16 @@ function App() {
 	}, []);
 
 	return (
-		<div>
+		<Fragment>
 			<NavBar />
-			<List>
-				{activities.map(data => (
-					<List.Item>{data.title}</List.Item>
-				))}
-			</List>
-		</div>
+			<Container style={{ marginTop: '100px' }}>
+				<List>
+					{activities.map(data => (
+						<List.Item>{data.title}</List.Item>
+					))}
+				</List>
+			</Container>
+		</Fragment>
 	);
 }
 
