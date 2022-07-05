@@ -53,8 +53,17 @@ namespace API.Controllers
 
     [HttpPost]
     public async Task<IActionResult> CreateActivitiy([FromBody]Activity activity)
-        {
-            return Ok(await MediatorServis.Send(new Create.Command { Activity = activity}));
-        }
-  }
+    {
+      return Ok(await MediatorServis.Send(new Create.Command { Activity = activity}));
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> EditActivity(Guid id, Activity activity)
+    {
+      activity.Id = id;
+      return Ok(await MediatorServis.Send(new Edit.Command { Activity = activity }));
+    }
+
+
+    }
 }
