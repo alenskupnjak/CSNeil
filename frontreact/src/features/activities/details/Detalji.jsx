@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 
 function Detalji(props) {
-	const { activity } = props;
+	const { activity, canceledSelectActivity } = props;
 	console.log('%c activity ', 'color:green', activity);
 
 	return (
@@ -18,7 +18,7 @@ function Detalji(props) {
 			<Card.Content extra>
 				<Button.Group widths="2">
 					<Button basic color="blue" content="Edit" />
-					<Button basic color="grey" content="Cancel" />
+					<Button basic color="grey" content="Cancel" onClick={canceledSelectActivity} />
 				</Button.Group>
 			</Card.Content>
 		</Card>

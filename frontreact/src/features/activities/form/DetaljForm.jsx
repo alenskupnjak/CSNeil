@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button, Form, Segment } from 'semantic-ui-react';
 
-export default function DetaljForm(params) {
+export default function DetaljForm(props) {
+	console.log('%c props= ', 'color:green', props);
+
 	return (
 		<Segment clearing>
 			<Form>

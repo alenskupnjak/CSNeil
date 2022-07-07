@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 
 export default function ActivityList(props) {
-	const { activities } = props;
+	const { activities, selectActivity } = props;
 	return (
 		<Segment>
 			<Item.Group divided>
@@ -18,7 +18,7 @@ export default function ActivityList(props) {
 								</div>
 							</Item.Description>
 							<Item.Extra>
-								<Button floated="right" content="view" color="blue" />
+								<Button floated="right" content="view" color="blue" onClick={() => selectActivity(data.id)} />
 								<Label bacic content={data.category} />
 							</Item.Extra>
 						</Item.Content>
