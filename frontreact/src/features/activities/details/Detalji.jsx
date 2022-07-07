@@ -2,8 +2,7 @@ import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 
 function Detalji(props) {
-	const { activity, canceledSelectActivity } = props;
-	console.log('%c activity ', 'color:green', activity);
+	const { activity, canceledSelectActivity, openForm } = props;
 
 	return (
 		<Card fluid>
@@ -17,7 +16,7 @@ function Detalji(props) {
 			</Card.Content>
 			<Card.Content extra>
 				<Button.Group widths="2">
-					<Button basic color="blue" content="Edit" />
+					<Button basic color="blue" content="Edit" onClick={() => openForm(activity.id)} />
 					<Button basic color="grey" content="Cancel" onClick={canceledSelectActivity} />
 				</Button.Group>
 			</Card.Content>

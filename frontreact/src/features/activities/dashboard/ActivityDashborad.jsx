@@ -5,8 +5,7 @@ import DetaljForm from '../form/DetaljForm';
 import ActivityList from './ActivityList';
 
 export default function ActivityDashboard(props) {
-	const { activities, selektiran, selectActivity, canceledSelectActivity } = props;
-	console.log('%c ActivityDashboard = ', 'color:green', activities);
+	const { activities, selektiran, selectActivity, canceledSelectActivity, editMode, openForm, closeForm } = props;
 
 	return (
 		<Grid>
@@ -14,8 +13,10 @@ export default function ActivityDashboard(props) {
 				<ActivityList activities={activities} selectActivity={selectActivity} />
 			</Grid.Column>
 			<Grid.Column width="6">
-				{selektiran && <Detalji activity={selektiran} canceledSelectActivity={canceledSelectActivity} />}
-				<DetaljForm />
+				{selektiran && !editMode && (
+					<Detalji activity={selektiran} canceledSelectActivity={canceledSelectActivity} openForm={openForm} />
+				)}
+				{editMode && <DetaljForm closeForm={closeForm} selektiran={selektiran} />}
 			</Grid.Column>
 		</Grid>
 	);
