@@ -1,8 +1,18 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 
-export default function ActivityList(props) {
-	const { activities, selectActivity } = props;
+function ActivityList(props) {
+	const { activities, selectActivity, deleteActivity, snimanje } = props;
+
+	const [target, setTarget] = useState('');
+
+	function handleDelete(e, id) {
+		console.log('%c 00 ', 'color:blue', e.target.name, id);
+
+		setTarget(e.target.name);
+		deleteActivity(id);
+	}
+
 	return (
 		<Segment>
 			<Item.Group divided>
@@ -18,7 +28,15 @@ export default function ActivityList(props) {
 								</div>
 							</Item.Description>
 							<Item.Extra>
-								<Button floated="right" content="view" color="blue" onClick={() => selectActivity(data.id)} />
+								<Button floated="right" content="View" color="blue" onClick={() => selectActivity(data.id)} />
+								<Button
+									name={data.id}
+									floated="right"
+									content="Delete"
+									color="red"
+									loading={snimanje && target === data.id}
+									onClick={e => handleDelete(e, data.id)}
+								/>
 								<Label bacic content={data.category} />
 							</Item.Extra>
 						</Item.Content>
@@ -28,3 +46,5 @@ export default function ActivityList(props) {
 		</Segment>
 	);
 }
+
+export default ActivityList;
