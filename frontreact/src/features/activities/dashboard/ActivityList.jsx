@@ -7,8 +7,6 @@ function ActivityList(props) {
 	const [target, setTarget] = useState('');
 
 	function handleDelete(e, id) {
-		console.log('%c 00 ', 'color:blue', e.target.name, id);
-
 		setTarget(e.target.name);
 		deleteActivity(id);
 	}
