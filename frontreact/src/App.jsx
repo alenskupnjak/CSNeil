@@ -1,13 +1,19 @@
-import { Fragment } from 'react';
-import { useEffect, useState } from 'react';
-import { Container } from 'semantic-ui-react';
-import NavBar from './NavBar';
-import ActivityDashboard from '../../features/activities/dashboard/ActivityDashborad';
-import Servisi from '../api/Servisi';
-import LoadingData from './LoadingData';
+import React from 'react';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState, Fragment } from 'react';
+import { Button, Container } from 'semantic-ui-react';
+import NavBar from './app/layout/NavBar';
+import ActivityDashboard from './features/activities/dashboard/ActivityDashborad';
+import Servisi from './app/api/Servisi';
+import LoadingData from './app/layout/LoadingData';
 import { v4 as uuid } from 'uuid';
+import { useStore } from './app/stores/store';
 
 function App() {
+	const { activityStore } = useStore();
+
+	console.log('%c activityStore= ', 'color:green', activityStore);
+
 	const [activities, setActivities] = useState([]);
 	const [selektiran, setSelektiran] = useState(null);
 	const [editMode, setEditMode] = useState(false);
@@ -102,12 +108,14 @@ function App() {
 		});
 	}
 
-	if (loading) return <LoadingData content="Loading data...." />;
+	if (loading) return <LoadingData content="Loading data..ddd.." />;
 
 	return (
 		<Fragment>
 			<NavBar openForm={handleFormOpen} />
 			<Container style={{ marginTop: '100px' }}>
+				<h2>{activityStore.title}</h2>
+				<Button content="Ajmoo" positive onClick={activityStore.setTitle} />
 				<ActivityDashboard
 					activities={activities}
 					selektiran={selektiran}
@@ -125,4 +133,4 @@ function App() {
 	);
 }
 
-export default App;
+export default observer(App);

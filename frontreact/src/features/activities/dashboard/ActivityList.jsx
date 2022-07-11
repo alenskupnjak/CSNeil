@@ -5,7 +5,6 @@ function ActivityList(props) {
 	const { activities, selectActivity, deleteActivity, snimanje } = props;
 
 	const [target, setTarget] = useState('');
-
 	function handleDelete(e, id) {
 		setTarget(e.target.name);
 		deleteActivity(id);
@@ -35,7 +34,7 @@ function ActivityList(props) {
 									loading={snimanje && target === data.id}
 									onClick={e => handleDelete(e, data.id)}
 								/>
-								<Label bacic content={data.category} />
+								<Label basic content={data.category} />
 							</Item.Extra>
 						</Item.Content>
 					</Item>
