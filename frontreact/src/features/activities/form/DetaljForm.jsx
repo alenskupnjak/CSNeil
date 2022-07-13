@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Button, Form, Segment } from 'semantic-ui-react';
+import { useStore } from '../../../app/stores/store';
 
-export default function DetaljForm(props) {
-	const { closeForm, selektiran, createOrEditActivity, snimanje } = props;
+// function DetaljForm(props) {
+// const { createOrEditActivity, snimanje } = props;
+function DetaljForm() {
+	const { activityStore } = useStore();
+	const { selektiran, closeForm, createActivity, updateActivity, loading } = activityStore;
 
 	let initialState = {
 		id: null,
@@ -22,7 +27,9 @@ export default function DetaljForm(props) {
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		createOrEditActivity(stanje);
+		console.log('%c stanje =', 'color:gold', stanje);
+		stanje.id ? updateActivity(stanje) : createActivity(stanje);
+		// createOrEditActivity(stanje);
 	}
 
 	function handleInputChange(e) {
@@ -39,9 +46,11 @@ export default function DetaljForm(props) {
 				<Form.Input placeholder="Date" type="date" value={stanje.date} name="date" onChange={handleInputChange} />
 				<Form.Input placeholder="Grad" value={stanje.city} name="city" onChange={handleInputChange} />
 				<Form.Input placeholder="Venue" value={stanje.venue} name="venue" onChange={handleInputChange} />
-				<Button loading={snimanje} floated="right" positive type="submit" content="Submit" />
+				<Button loading={loading} floated="right" positive type="submit" content="Submit" />
 				<Button floated="right" type="button" content="Cancel" onClick={closeForm} />
 			</Form>
 		</Segment>
 	);
 }
+
+export default observer(DetaljForm);
