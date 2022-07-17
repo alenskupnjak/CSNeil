@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable, runInAction, _allowStateReadsStart } from 'mobx';
+import { makeAutoObservable, observable, runInAction } from 'mobx';
 import Servisi from '../api/Servisi';
 import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
@@ -8,50 +8,67 @@ export default class ActivityStore {
 	selektiran = null; // selectedActivity
 	editMode = false;
 	loading = true;
-	snimanje = false; //loadinginitial
+	loadingInitial = false;
 
 	constructor() {
 		makeAutoObservable(this);
 	}
 
-	//  Usnimavanje svih dogadaja
+	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
 	loadActivities = async () => {
 		this.loading = true;
 		try {
+			this.activities = [];
 			let activities = await Servisi.listSvih();
 			activities = _.sortBy(activities, ['date']);
 			runInAction(() => {
 				activities.forEach(item => {
 					item.date = item.date.split('T')[0];
 					this.activities.push(item);
-
-					this.loading = false;
 				});
 			});
 		} catch (err) {
 			console.log('%c err ', 'color:red', err);
-			runInAction(() => {
-				this.loading = false;
-			});
+			runInAction(() => {});
+		} finally {
+			this.loading = false;
 		}
 	};
 
-	selectActivity = id => {
-		this.selektiran = this.activities.find(data => data.id === id);
+	// Usnimavanje jednog itema
+	loadActivity = async id => {
+		console.log('%c Id Create ', 'color:green', id);
+		this.loadingInitial = true;
+		try {
+			const activity = await Servisi.listaJednog(id);
+			runInAction(() => {
+				activity.date = activity.date.split('T')[0];
+				this.selektiran = activity;
+			});
+		} catch (err) {
+			console.log('%c error ', 'color:red', err);
+		} finally {
+			this.loadingInitial = false;
+		}
 	};
 
-	cancelSelectedActivity = () => {
-		this.selektiran = null;
-	};
+	// Ovo sve ce zamjeniti router
+	// selectActivity = id => {
+	// 	this.selektiran = this.activities.find(data => data.id === id);
+	// };
 
-	openForm = id => {
-		id ? this.selectActivity(id) : this.cancelSelectedActivity();
-		this.editMode = true;
-	};
+	// cancelSelectedActivity = () => {
+	// 	this.selektiran = null;
+	// };
 
-	closeForm = () => {
-		this.editMode = false;
-	};
+	// openForm = id => {
+	// 	id ? this.selectActivity(id) : this.cancelSelectedActivity();
+	// 	this.editMode = true;
+	// };
+
+	// closeForm = () => {
+	// 	this.editMode = false;
+	// };
 
 	createActivity = async aktivnost => {
 		aktivnost.id = uuid();
@@ -98,7 +115,7 @@ export default class ActivityStore {
 				this.activities = _.filter(this.activities, data => {
 					return data.id !== id;
 				});
-				this.cancelSelectedActivity();
+				// this.cancelSelectedActivity();
 				this.loading = false;
 				this.editMode = false;
 			});

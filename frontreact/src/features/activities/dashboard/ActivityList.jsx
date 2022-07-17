@@ -2,9 +2,9 @@ import { React, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Button, Item, Label, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
+import { Link } from 'react-router-dom';
 
 function ActivityList(props) {
-	// const { deleteActivity, snimanje } = props;
 	const { activityStore } = useStore();
 	const { activities, deleteActivity, loading } = activityStore;
 	const [target, setTarget] = useState('');
@@ -13,6 +13,7 @@ function ActivityList(props) {
 		setTarget(e.target.name);
 		deleteActivity(id);
 	}
+	console.log('%c activities= ', 'color:pink', activities);
 
 	return (
 		<Segment>
@@ -35,7 +36,9 @@ function ActivityList(props) {
 									floated="right"
 									content="View"
 									color="blue"
-									onClick={() => activityStore.selectActivity(data.id)}
+									// onClick={() => activityStore.selectActivity(data.id)}
+									as={Link}
+									to={`/aktivni/${data.id}`}
 								/>
 								<Button
 									name={data.id}

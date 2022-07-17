@@ -11,7 +11,7 @@ const sleep = delay => {
 axios.interceptors.response.use(async res => {
 	try {
 		console.log('%c interceptors ', 'color:gold', res);
-		await sleep(1000);
+		await sleep(300);
 		return res;
 	} catch (error) {
 		console.log('%c Greska ', 'color:red', error);
