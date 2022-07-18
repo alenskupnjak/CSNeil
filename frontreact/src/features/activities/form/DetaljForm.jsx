@@ -13,9 +13,6 @@ function DetaljForm() {
 	const { id } = useParams();
 	const history = useHistory();
 
-	console.log('%c useParams() ', 'color:green', useParams());
-	console.log('%c history ', 'color:green', history);
-
 	const [stanje, setStanje] = useState({
 		id: null,
 		title: '',
@@ -31,13 +28,11 @@ function DetaljForm() {
 			loadActivity(id);
 			selektiran && setStanje(selektiran);
 		}
-		console.log('%c selektiran ', 'color:red', selektiran);
 	}, [id, loadActivity]);
 
 	// submit
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log('%c stanje =', 'color:gold', stanje);
 		if (stanje.id) {
 			updateActivity(stanje);
 			history.push(`/aktivni/${stanje.id}`);
@@ -52,7 +47,6 @@ function DetaljForm() {
 		setStanje({ ...stanje, [name]: value });
 	}
 
-	console.log('%c loadingInitial= ', 'color:blue', loadingInitial, selektiran);
 	if (loadingInitial) return <LoadingData content="Loading data..u DetaljFORM   005 ....." />;
 
 	return (

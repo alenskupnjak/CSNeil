@@ -6,6 +6,7 @@ import DetaljForm from '../form/DetaljForm';
 import ActivityList from './ActivityList';
 import { useStore } from '../../../app/stores/store';
 import LoadingData from '../../../app/layout/LoadingData';
+import ActivityFilters from './ActivityFilters';
 
 function ActivityDashboard(props) {
 	const { activityStore } = useStore();
@@ -23,9 +24,7 @@ function ActivityDashboard(props) {
 				<ActivityList />
 			</Grid.Column>
 			<Grid.Column width="6">
-				<p>Filteri</p>
-				{/* {selektiran && !editMode && <Detalji />}
-				{editMode && <DetaljForm />} */}
+				<ActivityFilters />
 			</Grid.Column>
 		</Grid>
 	);

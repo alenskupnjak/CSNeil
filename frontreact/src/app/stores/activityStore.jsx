@@ -16,11 +16,20 @@ export default class ActivityStore {
 
 	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
 	loadActivities = async () => {
+		this.activities = [];
 		this.loading = true;
 		try {
-			this.activities = [];
 			let activities = await Servisi.listSvih();
+
 			activities = _.sortBy(activities, ['date']);
+
+			activities = _.chain(activities)
+				// Group the elements of Array based on `date` property
+				.groupBy('date')
+				// `key` is group's name (date), `value` is the array of objects
+				.map((value, key) => ({ date: key, data: value }))
+				.value();
+
 			runInAction(() => {
 				activities.forEach(item => {
 					item.date = item.date.split('T')[0];
@@ -83,7 +92,7 @@ export default class ActivityStore {
 			});
 		} catch (err) {
 			this.loading = false;
-			console.log('%c err ', 'color:red', err);
+			console.log('%c err Create  ', 'color:red', err);
 		}
 	};
 
