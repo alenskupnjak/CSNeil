@@ -42,11 +42,12 @@ namespace API.Controllers
 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Activity>> GetActivitiy(Guid id)
+    public async Task<IActionResult> GetActivitiy(Guid id)
     {
 
       // 01 return await _context.ActivitiesTable.FindAsync(id);
-      return await MediatorServis.Send(new Details.Query { Id = id });
+      var result = await MediatorServis.Send(new Details.Query { Id = id });
+      return HandleResult(result);
 
     }
 

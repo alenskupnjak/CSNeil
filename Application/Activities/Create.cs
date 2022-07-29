@@ -18,6 +18,7 @@ namespace Application.Activities
     {
       public CommandValidator()
       {
+        // setiranje validatora middel whaere
         RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
       }
     }
