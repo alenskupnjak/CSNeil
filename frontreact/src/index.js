@@ -9,14 +9,17 @@ import './app/layout/styles.css';
 import App from './App';
 
 import { store, StoreContext } from './app/stores/store';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
 	// <React.StrictMode>s
 	<StoreContext.Provider value={store}>
-		<BrowserRouter>
+		<Router history={history}>
 			<App />
-		</BrowserRouter>
+		</Router>
 	</StoreContext.Provider>,
 	// </React.StrictMode>,
 	document.getElementById('root')

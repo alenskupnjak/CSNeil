@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { getLCP } from 'web-vitals';
+import { history } from '../..';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -15,16 +17,35 @@ axios.interceptors.response.use(
 		return res;
 	},
 	err => {
-		const { data, status } = err.response;
+		const { data, status, config } = err.response;
+		console.log('%c data=', 'color:green', data);
+
 		switch (status) {
 			case 400:
-				toast.error('Los zahtijev');
+				if (config.method === 'get' && data?.errors?.hasOwnProperty('id')) {
+					history.push('/not-found');
+				}
+				if (data.errors) {
+					console.log('%c 022 Greska 400 ', 'color:green', data.errors);
+					const modalStateErrors = [];
+					for (const key in data.errors) {
+						if (data.errors[key]) {
+							modalStateErrors.push(data.errors[key]);
+						}
+					}
+					console.log('%c 020 Greska 400 ', 'color:green', modalStateErrors);
+					console.log('%c 021 Greska 400a ', 'color:green', modalStateErrors.flat());
+					throw modalStateErrors.flat();
+				} else {
+					toast.error(data);
+				}
 				break;
 			case 401:
 				toast.error('neautoriziran');
 				break;
 			case 404:
-				toast.error('Nisam naso 215');
+				history.push('/not-found');
+				// toast.error('Nisam naso 215');
 				break;
 			case 500:
 				toast.error('Server neki graska');
