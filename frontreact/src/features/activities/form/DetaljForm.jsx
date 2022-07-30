@@ -28,7 +28,7 @@ function DetaljForm() {
 			loadActivity(id);
 			selektiran && setStanje(selektiran);
 		}
-	}, [id, loadActivity]);
+	}, [id, loadActivity, selektiran]);
 
 	// submit
 	function handleSubmit(e) {

@@ -6,6 +6,7 @@
 		"@testing-library/jest-dom": "^5.16.4",
 		"@testing-library/user-event": "^13.5.0",
 		"axios": "^0.26.1",
+		"formik": "^2.2.6",
 		"lodash": "^4.17.21",
 		"mobx": "^6.6.1",
 		"mobx-react-lite": "^3.4.0",
