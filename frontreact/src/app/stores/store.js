@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import ActivityStore from './activityStore';
+import CommonStore from './commonStore';
 
 // interface Store {
 // 	activityStore: ActivityStore;
@@ -8,6 +9,7 @@ import ActivityStore from './activityStore';
 
 export const store = {
 	activityStore: new ActivityStore(),
+	commonStore: new CommonStore(),
 };
 
 // Setiram u index.js da mogu prosljedivati vrijednosti

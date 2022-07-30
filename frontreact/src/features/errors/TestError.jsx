@@ -29,12 +29,12 @@ function TestErrors() {
 	}
 
 	function handleBadGuid() {
-		axios.get(baseUrl + 'ActivitiesTable/notaguid').catch(err => console.log('018', err.response));
+		axios.get(baseUrl + 'ActivitiesTable/NEMAguid').catch(err => console.log('018', err));
 	}
 
 	function handleValidationError() {
 		axios.post(baseUrl + 'ActivitiesTable', {}).catch(err => {
-			console.log('019 ', err);
+			console.log('019 ajmoo', err);
 			setErrors(err);
 		});
 	}

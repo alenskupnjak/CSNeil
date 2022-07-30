@@ -20,7 +20,7 @@ namespace API.Controllers
     [HttpGet("server-error")]
     public ActionResult GetServerError()
     {
-      throw new Exception("This is a server error 011");
+      throw new Exception("023 This is a server error  poslano sa backenda - BuggyController");
     }
 
     [HttpGet("unauthorised")]
