@@ -8,7 +8,7 @@ import ActivityListItemStaro from './ActivityListItemStaro';
 function ActivityList(props) {
 	const { activityStore } = useStore();
 	const { activities } = activityStore;
-	console.log('%c activities= ', 'color:blue', activities);
+	console.log('%c activities = ', 'color:blue', activities);
 
 	return (
 		<Fragment>

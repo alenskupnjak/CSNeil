@@ -34,7 +34,7 @@ function TestErrors() {
 
 	function handleValidationError() {
 		axios.post(baseUrl + 'ActivitiesTable', {}).catch(err => {
-			console.log('019', err);
+			console.log('019 ', err);
 			setErrors(err);
 		});
 	}
