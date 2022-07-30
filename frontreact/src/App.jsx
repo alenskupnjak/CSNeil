@@ -7,12 +7,15 @@ import { Route, useLocation } from 'react-router-dom';
 import HomePage from './features/home/HomePage';
 import DetaljForm from './features/activities/form/DetaljForm';
 import Detalji from './features/activities/details/Detalji';
+import TestErrors from './features/errors/TestError';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 	const location = useLocation();
 
 	return (
 		<Fragment>
+			<ToastContainer position="bottom-right" />
 			<Route exact path="/" component={HomePage} />
 			<Route
 				path={'/(.+)'}
@@ -23,6 +26,7 @@ function App() {
 							<Route exact path="/aktivni" component={ActivityDashboard} />
 							<Route exact path="/aktivni/:id" component={Detalji} />
 							<Route key={location.key} path={['/createActivity', '/manage/:id']} component={DetaljForm} />
+							<Route path={['/errors']} component={TestErrors} />
 						</Container>
 					</div>
 				)}

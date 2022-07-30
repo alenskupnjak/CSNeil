@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable, runInAction } from 'mobx';
-import Servisi from '../api/Servisi';
+import Servisi from '../api/agent';
 import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
 

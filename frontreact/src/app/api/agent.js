@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
@@ -8,16 +9,45 @@ const sleep = delay => {
 	});
 };
 
-axios.interceptors.response.use(async res => {
-	try {
-		console.log('%c interceptors ', 'color:gold', res);
+axios.interceptors.response.use(
+	async res => {
 		await sleep(300);
 		return res;
-	} catch (error) {
-		console.log('%c Greska ', 'color:red', error);
-		return await Promise.reject(error);
+	},
+	err => {
+		const { data, status } = err.response;
+		switch (status) {
+			case 400:
+				toast.error('Los zahtijev');
+				break;
+			case 401:
+				toast.error('neautoriziran');
+				break;
+			case 404:
+				toast.error('Nisam naso 215');
+				break;
+			case 500:
+				toast.error('Server neki graska');
+				break;
+
+			default:
+				break;
+		}
+
+		return Promise.reject(err);
 	}
-});
+);
+
+// axios.interceptors.response.use(async res => {
+// 	try {
+// 		console.log('%c interceptors ', 'color:gold', res);
+// 		await sleep(300);
+// 		return res;
+// 	} catch (error) {
+// 		console.log('%c Greska ', 'color:red', error);
+// 		return await Promise.reject(error);
+// 	}
+// });
 
 const request = {
 	get: async url => await axios.get(url).then(res => res.data),

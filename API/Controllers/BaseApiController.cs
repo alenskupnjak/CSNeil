@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BaseApiController : ControllerBase
     {
         private IMediator _mediator;
@@ -17,6 +17,7 @@ namespace API.Controllers
 
         protected ActionResult HandleResult<T>(Result<T> result)
         {
+            if (result == null) return NotFound();
             // Pronaso rezultat vracam vrijednost
             if (result.IsSuccess && result.Value != null)
                 return Ok(result.Value);

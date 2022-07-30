@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-  [ApiController]
-  [Route("api/[controller]")]
+  // [ApiController]
+  // [Route("api/[controller]")]
   // 06 public class ActivitiesTableController : ControllerBase
   public class ActivitiesTableController : BaseApiController
   {
@@ -29,14 +29,14 @@ namespace API.Controllers
     // 06 }
 
     [HttpGet]
-    public async Task<ActionResult<List<Activity>>> GetActivities()
+    public async Task<IActionResult> GetActivities()
     {
 
       // 01 return await _context.ActivitiesTable.ToListAsync();
 
       // 06 return await _mediator.Send(new List.Query());
 
-      return await MediatorServis.Send(new List.Query());
+      return HandleResult(await MediatorServis.Send(new List.Query()));
 
     }
 
@@ -55,21 +55,21 @@ namespace API.Controllers
     [HttpPost]
     public async Task<IActionResult> CreateActivitiy([FromBody] Activity activity)
     {
-      return Ok(await MediatorServis.Send(new Create.Command { Activity = activity }));
+      return HandleResult(await MediatorServis.Send(new Create.Command { Activity = activity }));
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> EditActivity(Guid id, Activity activity)
     {
       activity.Id = id;
-      return Ok(await MediatorServis.Send(new Edit.Command { Activity = activity }));
+      return HandleResult(await MediatorServis.Send(new Edit.Command { Activity = activity }));
     }
 
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteActivity(Guid id)
     {
-      return Ok(await MediatorServis.Send(new Delete.Command { Id = id }));
+      return HandleResult(await MediatorServis.Send(new Delete.Command { Id = id }));
     }
 
 
