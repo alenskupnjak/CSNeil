@@ -15,7 +15,7 @@ namespace API.Middleware
         private readonly ILogger<ExceptionMiddleware> _logger;
         private readonly IHostEnvironment _env;
 
-        public ExceptionMiddleware( RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
         {
             _next = next;
             _logger = logger;
@@ -26,7 +26,7 @@ namespace API.Middleware
         {
             try
             {
-                // svaki HTTP ce proci ovuda i ako ima gresku ide u catch
+                // svaki HTTP ce proci ovuda i ako ima gresku ide u catch pokus
                 await _next(context);
             }
             catch (Exception ex)
@@ -34,7 +34,7 @@ namespace API.Middleware
                 _logger.LogError(ex, ex.Message);
                 context.Response.ContentType = "application/json";
 
-                context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                 var response = _env.IsDevelopment()
                     ? new AppException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
