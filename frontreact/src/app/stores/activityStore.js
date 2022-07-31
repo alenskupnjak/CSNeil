@@ -7,7 +7,7 @@ export default class ActivityStore {
 	activities = [];
 	selektiran = null; // selectedActivity
 	editMode = false;
-	loading = true;
+	loading = false;
 	loadingInitial = false;
 
 	constructor() {
@@ -32,6 +32,7 @@ export default class ActivityStore {
 
 			runInAction(() => {
 				activities.forEach(item => {
+					// Ovo je zbog grupiranja ovakav format
 					item.date = item.date.split('T')[0];
 					this.activities.push(item);
 				});
@@ -40,6 +41,7 @@ export default class ActivityStore {
 			console.log('%c err ', 'color:red', err);
 			runInAction(() => {});
 		} finally {
+			// await new Promise(r => setTimeout(r, 2000));
 			this.loading = false;
 		}
 	};
@@ -52,6 +54,7 @@ export default class ActivityStore {
 			const activity = await Servisi.listaJednog(id);
 			runInAction(() => {
 				activity.date = activity.date.split('T')[0];
+				// activity.date = new Date(activity.date);
 				this.selektiran = activity;
 			});
 		} catch (err) {
@@ -82,10 +85,12 @@ export default class ActivityStore {
 	createActivity = async aktivnost => {
 		aktivnost.id = uuid();
 		this.loading = true;
+		console.log('%c CREATE', 'color:red', aktivnost);
+
 		try {
 			await Servisi.kreiraj(aktivnost);
 			runInAction(() => {
-				this.activities.push(aktivnost);
+				// this.activities.push(aktivnost);
 				this.selektiran = null;
 				this.loading = false;
 				this.editMode = false;
@@ -97,6 +102,8 @@ export default class ActivityStore {
 	};
 
 	updateActivity = async aktivnost => {
+		console.log('%c UPDATE', 'color:green', aktivnost);
+
 		this.loading = true;
 		try {
 			await Servisi.update(aktivnost);

@@ -26,7 +26,7 @@ namespace API.Middleware
         {
             try
             {
-                // svaki HTTP ce proci ovuda i ako ima gresku ide u catch pokus
+                // svaki HTTP ce proci ovuda i ako ima gresku ide u catch
                 await _next(context);
             }
             catch (Exception ex)

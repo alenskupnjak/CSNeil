@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
+import { format } from 'date-fns';
 // import { Activity } from '../../../app/models/selektiran';
 
 const activityImageStyle = {
@@ -27,7 +28,7 @@ export default observer(function DetaljHeader({ selektiran }) {
 						<Item>
 							<Item.Content>
 								<Header size="huge" content={selektiran.title} style={{ color: 'white' }} />
-								<p>{selektiran.date}</p>
+								<p>{format(new Date(selektiran.date), 'MM/yyyy')}</p>
 								<p>
 									Hosted by <strong>Bob</strong>
 								</p>

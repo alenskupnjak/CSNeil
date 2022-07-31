@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
+import { format } from 'date-fns';
 import { useStore } from '../../../app/stores/store';
 
 function ActivityListItem({ item, index }) {
@@ -16,7 +17,7 @@ function ActivityListItem({ item, index }) {
 
 	return (
 		<Fragment>
-			<Segment.Group divided>
+			<Segment.Group divided="true">
 				<Segment>
 					<Item.Group>
 						<Item>
@@ -32,6 +33,7 @@ function ActivityListItem({ item, index }) {
 				</Segment>
 				<Segment>
 					<span>
+						<Icon name="clock" /> {format(new Date(item.date), 'dd-MM-yyyy')}
 						<Icon name="clock" /> {item.date}
 						<Icon name="marker" /> {item.venue}
 					</span>

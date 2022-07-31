@@ -4,6 +4,7 @@ import { Header, Item, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import ActivityListItem from './ActivityListItem';
 import ActivityListItemStaro from './ActivityListItemStaro';
+import { v4 as uuid } from 'uuid';
 
 function ActivityList(props) {
 	const { activityStore } = useStore();
@@ -15,13 +16,13 @@ function ActivityList(props) {
 			{activities &&
 				activities.map(({ date, data }) => {
 					return (
-						<div key={date}>
+						<div key={uuid()}>
 							<Header sub color="teal">
 								{date}
 							</Header>
 							{data &&
 								data.map((item, index) => {
-									return <ActivityListItem key={item.id} item={item} index={index} />;
+									return <ActivityListItem key={index} item={item} index={index} />;
 								})}
 						</div>
 					);
@@ -29,7 +30,7 @@ function ActivityList(props) {
 			{activities &&
 				activities.map(({ date, data }) => {
 					return (
-						<div key={date}>
+						<div key={uuid()}>
 							<Header sub color="teal">
 								{date}
 							</Header>
@@ -37,7 +38,7 @@ function ActivityList(props) {
 								<Item.Group divided>
 									{data &&
 										data.map((item, index) => {
-											return <ActivityListItemStaro key={item.id} item={item} index={index} />;
+											return <ActivityListItemStaro key={index} item={item} index={index} />;
 										})}
 								</Item.Group>
 							</Segment>
