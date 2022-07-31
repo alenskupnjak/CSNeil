@@ -1,3 +1,4 @@
+using API.Extensions;
 using API.Middleware;
 using Application.Activities;
 using Application.Core;
@@ -59,6 +60,9 @@ namespace API
       // bolja izvedba
       services.AddMediatR(typeof(List.Handler).Assembly);
       services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
+      // KOnfiguriranje Identity servisa
+      services.AddIdentityServices(_config);
 
 
     }

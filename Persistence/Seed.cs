@@ -4,16 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
-    public class Seed
-    {
-        public static async Task SeedData(DataContext context)
-        {
-            if (context.ActivitiesTable.Any()) return;
+  public class Seed
+  {
+    public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
 
-            var activities = new List<Activity>
+    {
+
+      // Punjenje Usera ako je prazno
+      if (!userManager.Users.Any())
+      {
+        var users = new List<AppUser>
+         {
+            new AppUser{DisplayName = "Alen", UserName = "bob", Email = "bob@test.com"},
+            new AppUser{DisplayName = "Tom", UserName = "tom", Email = "tom@test.com"},
+              new AppUser{DisplayName = "Jane", UserName = "jane", Email = "jane@test.com"},
+         };
+
+        foreach (var user in users)
+        {
+          await userManager.CreateAsync(user, "Pa$$w0rd");
+        }
+      }
+
+
+      // Punjenjw tabela ako je prazno
+      if (context.ActivitiesTable.Any()) return;
+
+      var activities = new List<Activity>
             {
                 new Activity
                 {
@@ -107,10 +128,10 @@ namespace Persistence
                 }
             };
 
-            await context.ActivitiesTable.AddRangeAsync(activities);
-            await context.SaveChangesAsync();
-        }
-
-
+      await context.ActivitiesTable.AddRangeAsync(activities);
+      await context.SaveChangesAsync();
     }
+
+
+  }
 }
