@@ -90,6 +90,8 @@ namespace API
       // mora biti iza routing !!
       app.UseCors("CorsPolicy");
 
+      app.UseAuthentication();
+
       app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
