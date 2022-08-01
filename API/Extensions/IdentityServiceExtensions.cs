@@ -28,7 +28,7 @@ namespace API.Extensions
       //services.AddAuthentication();
       //services.AddScoped<TokenService>();
 
-      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mora biti vise od 12 znakova"));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          .AddJwtBearer(opt =>

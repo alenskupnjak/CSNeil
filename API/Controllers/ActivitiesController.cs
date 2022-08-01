@@ -23,7 +23,6 @@ namespace API.Controllers
     // 06    _mediator = mediator;
     //    //  01 _context = context;
     // 06 }
-
     [HttpGet]
     public async Task<IActionResult> GetActivities()
     {
@@ -36,7 +35,6 @@ namespace API.Controllers
 
     }
 
-    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetActivitiy(Guid id)
     {
