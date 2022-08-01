@@ -7,42 +7,25 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-  // [ApiController]
-  // [Route("api/[controller]")]
-  // 06 public class ActivitiesTableController : ControllerBase
+  // ovime sam omogucio da svako ima pristup
+  // [AllowAnonymous]
   public class ActivitiesTableController : BaseApiController
   {
 
-    // 06  private readonly IMediator _mediator;
-
-    // 06 // 01 private readonly DataContext _context;
-
-    // 06  // 01 public ActivitiesTableController(DataContext context)
-    // 06 public ActivitiesTableController(IMediator mediator)
-    // 06  {
-    // 06    _mediator = mediator;
-    //    //  01 _context = context;
-    // 06 }
+    
+ 
     [HttpGet]
+    // ime na kraju  GetActivities moze biti bilo kakvo, nema utjecaja
     public async Task<IActionResult> GetActivities()
     {
-
-      // 01 return await _context.ActivitiesTable.ToListAsync();
-
-      // 06 return await _mediator.Send(new List.Query());
-
       return HandleResult(await MediatorServis.Send(new List.Query()));
-
     }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetActivitiy(Guid id)
     {
-
-      // 01 return await _context.ActivitiesTable.FindAsync(id);
       var result = await MediatorServis.Send(new Details.Query { Id = id });
-      return HandleResult(result);
-
+        return HandleResult(result);
     }
 
 
@@ -51,6 +34,7 @@ namespace API.Controllers
     {
       return HandleResult(await MediatorServis.Send(new Create.Command { Activity = activity }));
     }
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> EditActivity(Guid id, Activity activity)

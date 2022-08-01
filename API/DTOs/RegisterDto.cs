@@ -4,18 +4,18 @@ namespace API.DTOs
 {
   public class RegisterDto
   {
-    //[Required]
+    [Required]
     public string DisplayName { get; set; }
 
-    //[Required]
-    //[EmailAddress]
+    [Required]
+    [EmailAddress]
     public string Email { get; set; }
 
-    //[Required]
-    //[RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", ErrorMessage = "Password must be complex")]
+    [Required]
+    [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", ErrorMessage = "Password mora biti složeniji")]
     public string Password { get; set; }
 
-    //[Required]
+    [Required]
     public string Username { get; set; }
   }
 }
