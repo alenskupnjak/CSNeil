@@ -9,7 +9,6 @@ import { v4 as uuid } from 'uuid';
 function ActivityList(props) {
 	const { activityStore } = useStore();
 	const { activities } = activityStore;
-	console.log('%c activities = ', 'color:blue', activities);
 
 	return (
 		<Fragment>
@@ -27,7 +26,7 @@ function ActivityList(props) {
 						</div>
 					);
 				})}
-			{activities &&
+			{/* {activities &&
 				activities.map(({ date, data }) => {
 					return (
 						<div key={uuid()}>
@@ -44,7 +43,7 @@ function ActivityList(props) {
 							</Segment>
 						</div>
 					);
-				})}
+				})} */}
 		</Fragment>
 	);
 }

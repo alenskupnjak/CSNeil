@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable, runInAction } from 'mobx';
-import Servisi from '../api/agent';
+import agent from '../api/agent';
 import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
 
@@ -19,7 +19,7 @@ export default class ActivityStore {
 		this.activities = [];
 		this.loading = true;
 		try {
-			let activities = await Servisi.listSvih();
+			let activities = await agent.Servisi.listSvih();
 
 			activities = _.sortBy(activities, ['date']);
 
@@ -51,7 +51,7 @@ export default class ActivityStore {
 		console.log('%c Id Create ', 'color:green', id);
 		this.loadingInitial = true;
 		try {
-			const activity = await Servisi.listaJednog(id);
+			const activity = await agent.Servisi.listaJednog(id);
 			runInAction(() => {
 				activity.date = activity.date.split('T')[0];
 				// activity.date = new Date(activity.date);
@@ -88,7 +88,7 @@ export default class ActivityStore {
 		console.log('%c CREATE', 'color:red', aktivnost);
 
 		try {
-			await Servisi.kreiraj(aktivnost);
+			await agent.Servisi.kreiraj(aktivnost);
 			runInAction(() => {
 				// this.activities.push(aktivnost);
 				this.selektiran = null;
@@ -106,7 +106,7 @@ export default class ActivityStore {
 
 		this.loading = true;
 		try {
-			await Servisi.update(aktivnost);
+			await agent.Servisi.update(aktivnost);
 			runInAction(() => {
 				this.activities = _.filter(this.activities, data => {
 					return data.id !== aktivnost.id;
@@ -126,7 +126,7 @@ export default class ActivityStore {
 	deleteActivity = async id => {
 		this.loading = true;
 		try {
-			await Servisi.obrisi(id);
+			await agent.Servisi.obrisi(id);
 			runInAction(() => {
 				this.activities = _.filter(this.activities, data => {
 					return data.id !== id;

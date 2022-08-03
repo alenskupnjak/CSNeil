@@ -17,7 +17,7 @@ axios.interceptors.response.use(
 		return res;
 	},
 	err => {
-		console.log('%c 026 data=', 'color:green', err.response);
+		console.log('%c 026 interceptors data=', 'color:green', err.response);
 		const { data, status, config } = err.response;
 
 		switch (status) {
@@ -42,7 +42,7 @@ axios.interceptors.response.use(
 				}
 				break;
 			case 401:
-				toast.error('neautoriziran');
+				toast.error(' 31 Neautoriziran');
 				break;
 			case 404:
 				history.push('/not-found');
@@ -62,45 +62,31 @@ axios.interceptors.response.use(
 	}
 );
 
-// axios.interceptors.response.use(async res => {
-// 	try {
-// 		console.log('%c interceptors ', 'color:gold', res);
-// 		await sleep(300);
-// 		return res;
-// 	} catch (error) {
-// 		console.log('%c Greska ', 'color:red', error);
-// 		return await Promise.reject(error);
-// 	}
-// });
+axios.interceptors.request.use(config => {
+	const token = store.commonStore.token;
+	if (token) config.headers.Authorization = `Bearer ${token}`;
+	console.log('%c 032 config=', 'color:gold', config);
+	return config;
+});
+
+// presretac poruka
+axios.interceptors.response.use(async res => {
+	try {
+		console.log('%c Interceptors ', 'color:gold', res);
+		await sleep(200);
+		return res;
+	} catch (error) {
+		console.log('%c Greska ', 'color:red', error);
+		return await Promise.reject(error);
+	}
+});
 
 const request = {
-	get: async url => await axios.get(url).then(res => res.data),
-	post: async (url, body) => {
-		let axiosConfig = {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		};
-		await axios
-			.post(url, body, axiosConfig)
-			.then(res => res.data)
-			.catch(err => console.log('%c 027 SERVIS err ', 'color:red', err));
-	},
-	put: async (url, body) => {
-		await axios
-			.put(url, body)
-			.then(res => {
-				return res;
-			})
-			.catch(err => {
-				console.log('%c  028 Greska ', 'color:red', err);
-			});
-	},
-	delete: async url =>
-		await axios.delete(url).then(res => {
-			res.poruka = 'OBRISANO';
-			return res.data;
-		}),
+	// Ovdje nije dobro stavljati catch jer onda ne mozel loviti greske okolo u app
+	get: url => axios.get(url).then(res => res.data),
+	post: (url, body) => axios.post(url, body).then(res => res.data),
+	put: (url, body) => axios.put(url, body).then(res => res),
+	delete: url => axios.delete(url).then(res => res.data),
 };
 
 const Servisi = {
@@ -111,4 +97,15 @@ const Servisi = {
 	obrisi: id => request.delete(`/ActivitiesTable/${id}`),
 };
 
-export default Servisi;
+const Account = {
+	current: () => request.get('/account'),
+	login: user => request.post('/account/login', user),
+	register: user => request.post('/account/register', user),
+};
+
+const agent = {
+	Servisi,
+	Account,
+};
+
+export default agent;
