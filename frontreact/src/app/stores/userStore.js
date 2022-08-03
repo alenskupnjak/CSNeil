@@ -1,7 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { history } from '../..';
 import agent from '../api/agent';
-// import { User, UserFormValues } from '../models/user';
 import { store } from './store';
 
 export default class UserStore {
@@ -23,7 +22,7 @@ export default class UserStore {
 				this.user = user;
 			});
 			history.push('/aktivni');
-			// store.modalStore.closeModal();
+			store.modalStore.closeModal();
 		} catch (error) {
 			throw error;
 		}
@@ -47,7 +46,7 @@ export default class UserStore {
 
 	pokus = async () => {
 		try {
-			console.log('%c 2222222222222222222222222222222', 'color:green');
+			console.log('%cPokuka dolazi iz UserStore!!', 'color:green');
 		} catch (error) {
 			console.log(error);
 		}
@@ -58,7 +57,7 @@ export default class UserStore {
 			const user = await agent.Account.register(creds);
 			store.commonStore.setToken(user.token);
 			runInAction(() => (this.user = user));
-			history.push('/activities');
+			history.push('/aktivni');
 			store.modalStore.closeModal();
 		} catch (error) {
 			throw error;

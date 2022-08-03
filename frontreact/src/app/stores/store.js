@@ -2,16 +2,14 @@ import { createContext, useContext } from 'react';
 
 import ActivityStore from './activityStore';
 import CommonStore from './commonStore';
+import ModalStore from './ModalStore';
 import UserStore from './userStore';
-
-// interface Store {
-// 	activityStore: ActivityStore;
-// }
 
 export const store = {
 	activityStore: new ActivityStore(),
 	commonStore: new CommonStore(),
 	userStore: new UserStore(),
+	modalStore: new ModalStore(),
 };
 
 // Setiram u index.js da mogu prosljedivati vrijednosti

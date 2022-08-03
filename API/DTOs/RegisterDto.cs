@@ -12,7 +12,7 @@ namespace API.DTOs
     public string Email { get; set; }
 
     [Required]
-    [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$", ErrorMessage = "Password mora biti složeniji")]
+    [RegularExpression("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,20}$", ErrorMessage = "Password mora biti složeniji !")]
     public string Password { get; set; }
 
     [Required]

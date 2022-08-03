@@ -14,24 +14,27 @@ import ServerError from './features/errors/ServerError';
 import LoginForm from './features/users/LoginForm';
 import { useStore } from './app/stores/store';
 import LoadingData from './app/layout/LoadingData';
+import ModalContainer from './app/common/modals/ModalContainer';
 
 function App() {
 	const location = useLocation();
 	const { commonStore, userStore } = useStore();
 
-	useEffect(() => {
-		if (commonStore.token) {
-			userStore.getUser().finally(() => commonStore.setAppLoaded());
-		} else {
-			commonStore.setAppLoaded();
-		}
-	}, [commonStore, userStore]);
+	// napravio sam preko stora ne volim useEffect
+	// useEffect(() => {
+	// 	if (commonStore.token) {
+	// 		userStore.getUser().finally(() => commonStore.setAppLoaded());
+	// 	} else {
+	// 		commonStore.setAppLoaded();
+	// 	}
+	// }, [commonStore, userStore]);
 
 	if (!commonStore.appLoaded) return <LoadingData content="Loading APP..." />;
 
 	return (
 		<Fragment>
 			<ToastContainer position="bottom-right" />
+			<ModalContainer />
 			<Route exact path="/" component={HomePage} />
 			<Route
 				path={'/(.+)'}
