@@ -12,8 +12,8 @@ namespace API.Controllers
   public class ActivitiesTableController : BaseApiController
   {
 
-    
- 
+
+
     [HttpGet]
     // ime na kraju  GetActivities moze biti bilo kakvo, nema utjecaja
     public async Task<IActionResult> GetActivities()
@@ -25,7 +25,7 @@ namespace API.Controllers
     public async Task<IActionResult> GetActivitiy(Guid id)
     {
       var result = await MediatorServis.Send(new Details.Query { Id = id });
-        return HandleResult(result);
+      return HandleResult(result);
     }
 
 
@@ -48,6 +48,17 @@ namespace API.Controllers
     public async Task<IActionResult> DeleteActivity(Guid id)
     {
       return HandleResult(await MediatorServis.Send(new Delete.Command { Id = id }));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPost("{id}/attend")]
+    public async Task<IActionResult> Attend(Guid id)
+    {
+      return HandleResult(await MediatorServis.Send(new UpdateAttendance.Command { Id = id }));
     }
 
 
