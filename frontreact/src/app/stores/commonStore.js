@@ -8,7 +8,6 @@ export default class CommonStore {
 
 	constructor() {
 		makeAutoObservable(this);
-
 		console.log('%c *** constructor CommonStore ***', 'color:green', this.token);
 
 		reaction(

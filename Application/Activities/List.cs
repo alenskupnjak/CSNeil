@@ -1,4 +1,5 @@
 ﻿using Application.Core;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,24 +13,32 @@ using System.Threading.Tasks;
 
 namespace Application.Activities
 {
-    public class List
+  public class List
+  {
+    public class Query : IRequest<Result<List<ActivityDto>>> { }
+
+    public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
     {
-        public class Query : IRequest<Result<List<Activity>>> { }
+      private readonly DataContext _context;
+      private readonly IMapper _mapper;
 
-        public class Handler : IRequestHandler<Query, Result<List<Activity>>>
-        {
-            private readonly DataContext _context;
+      public Handler(DataContext context, IMapper mapper)
+      {
+        _context = context;
+        _mapper = mapper;
+      }
 
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
+      public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
+      {
+        var activities = await _context.ActivitiesTable
+          .Include(a => a.Attendees)
+          .ThenInclude(u => u.AppUser)
+          .ToListAsync(cancellationToken);
 
-            public async Task<Result<List<Activity>>>  Handle(Query request, CancellationToken cancellationToken)
-            {
-                var result = await _context.ActivitiesTable.ToListAsync(cancellationToken);
-                return Result<List<Activity>>.Success(result);
-            }
-        }
+        var data = _mapper.Map<List<ActivityDto>>(activities);
+
+        return Result<List<ActivityDto>>.Success(data);
+      }
     }
+  }
 }

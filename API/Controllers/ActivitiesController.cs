@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace API.Controllers
 {
   // ovime sam omogucio da svako ima pristup
-  [AllowAnonymous]
+  // [AllowAnonymous]
   public class ActivitiesTableController : BaseApiController
   {
 

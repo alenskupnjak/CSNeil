@@ -2,8 +2,10 @@ using API.Extensions;
 using API.Middleware;
 using Application.Activities;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +38,7 @@ namespace API
 
       services.AddControllers(opt =>
       {
-        // ovime ubacijemo zastiti na svaki path
+        // ovime ubacijemo zastitu na svaki path
         var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
         opt.Filters.Add(new AuthorizeFilter(policy));
       }).AddFluentValidation(config =>
@@ -60,13 +62,14 @@ namespace API
         {
           opt.AddPolicy("CorsPolicy", policy =>
           {
-            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3002");
           });
         });
 
       // bolja izvedba
       services.AddMediatR(typeof(List.Handler).Assembly);
       services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+      services.AddScoped<IUserAccessor, UserAccessor>();
 
       // KOnfiguriranje Identity servisa
       services.AddIdentityServices(_config);
@@ -74,8 +77,8 @@ namespace API
 
     }
 
+    // MIDDLEWARE
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    // Ovo je u stvari middleware
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       // Moj middleware

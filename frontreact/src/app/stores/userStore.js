@@ -46,7 +46,7 @@ export default class UserStore {
 
 	pokus = async () => {
 		try {
-			console.log('%cPokuka dolazi iz UserStore!!', 'color:green');
+			console.log('%c Poruka dolazi iz UserStore!!', 'color:blue');
 		} catch (error) {
 			console.log(error);
 		}

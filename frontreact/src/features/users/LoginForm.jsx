@@ -20,7 +20,7 @@ export default observer(function LoginForm() {
 				console.log('%c 32 error= ', 'color:pink', values);
 				userStore.login(values).catch(error => {
 					console.log('%c LOGIN 30 error= ', 'color:blue', error);
-					return setErrors({ error: 'Invalid email or password' });
+					return setErrors({ error: '032 Invalid email or password' });
 				});
 			}}
 		>
