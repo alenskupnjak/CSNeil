@@ -1,5 +1,6 @@
 ﻿using Application.Core;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -30,14 +31,18 @@ namespace Application.Activities
 
       public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
       {
+        // var activities = await _context.ActivitiesTable
+        //    .Include(a => a.Attendees)
+        //    .ThenInclude(u => u.AppUser)
+        //    .ToListAsync(cancellationToken);
+        // var data = _mapper.Map<List<ActivityDto>>(activities);
+        // return Result<List<ActivityDto>>.Success(data);
+
         var activities = await _context.ActivitiesTable
-          .Include(a => a.Attendees)
-          .ThenInclude(u => u.AppUser)
-          .ToListAsync(cancellationToken);
+              .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+              .ToListAsync(cancellationToken);
 
-        var data = _mapper.Map<List<ActivityDto>>(activities);
-
-        return Result<List<ActivityDto>>.Success(data);
+        return Result<List<ActivityDto>>.Success(activities);
       }
     }
   }

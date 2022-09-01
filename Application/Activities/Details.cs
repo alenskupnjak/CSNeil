@@ -1,44 +1,47 @@
 ﻿using Application.Core;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Activities
 {
-    public class Details
+  public class Details
+  {
+    public class Query : IRequest<Result<ActivityDto>>
     {
-        public class Query : IRequest<Result<Activity>>
-        {
-            public Guid Id { get; set; }
-        }
-
-        public class Handler : IRequestHandler<Query, Result<Activity>>
-        {
-            private readonly DataContext _context;
-
-            public Handler(DataContext context)
-            {
-                _context = context;
-            }
-
-            public async Task<Result<Activity>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                // return await _context.ActivitiesTable.FindAsync(request.Id);
-                var activity = await _context.ActivitiesTable.FindAsync(request.Id);
-
-                return Result<Activity>.Success(activity);
-
-                // Ovo rijesenj nije dobro u praksi zbog koristenja resursa Exception
-                // Treba se izbjegavati
-                //if (activity == null) throw new Exception("Nisam nista pronasao!");
-                //return activity;
-            }
-        }
+      public Guid Id { get; set; }
     }
+
+    public class Handler : IRequestHandler<Query, Result<ActivityDto>>
+    {
+      private readonly DataContext _context;
+      private readonly IMapper _mapper;
+
+      public Handler(DataContext context, IMapper mapper)
+      {
+        _context = context;
+        _mapper = mapper;
+      }
+
+      public async Task<Result<ActivityDto>> Handle(Query request, CancellationToken cancellationToken)
+      {
+        // return await _context.ActivitiesTable.FindAsync(request.Id);
+        var activity = await _context.ActivitiesTable.ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                      .FirstOrDefaultAsync(x => x.Id == request.Id);
+
+        return Result<ActivityDto>.Success(activity);
+
+        // Ovo rijesenj nije dobro u praksi zbog koristenja resursa Exception
+        // Treba se izbjegavati
+        //if (activity == null) throw new Exception("Nisam nista pronasao!");
+        //return activity;
+      }
+    }
+  }
 }
