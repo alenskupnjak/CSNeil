@@ -23,6 +23,7 @@ namespace API
 
       try
       {
+        /// Ako nema baze kreiramo novu
         var context = services.GetRequiredService<DataContext>();
         var userManager = services.GetRequiredService<UserManager<AppUser>>();
         await context.Database.MigrateAsync();

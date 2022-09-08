@@ -21,6 +21,8 @@ export default class ActivityStore {
 		try {
 			let activities = await agent.Servisi.listSvih();
 
+			// console.log('%c 01 activities', 'color:red', activities);
+
 			activities = _.sortBy(activities, ['date']);
 
 			activities = _.chain(activities)
@@ -36,6 +38,7 @@ export default class ActivityStore {
 					item.date = item.date.split('T')[0];
 					this.activities.push(item);
 				});
+				console.log('%c 03', 'color:green', this.activities);
 			});
 		} catch (err) {
 			console.log('%c err ', 'color:red', err);
@@ -103,6 +106,7 @@ export default class ActivityStore {
 
 	updateActivity = async aktivnost => {
 		console.log('%c UPDATE', 'color:green', aktivnost);
+		delete aktivnost.attendees;
 
 		this.loading = true;
 		try {

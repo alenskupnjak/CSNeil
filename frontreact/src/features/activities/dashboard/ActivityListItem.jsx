@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { useStore } from '../../../app/stores/store';
+import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 function ActivityListItem({ item, index }) {
 	// const { activityStore } = useStore();
@@ -38,7 +39,9 @@ function ActivityListItem({ item, index }) {
 						<Icon name="marker" /> {item.venue}
 					</span>
 				</Segment>
-				<Segment secondary>Nesto tu dode</Segment>
+				<Segment secondary>
+					<ActivityListItemAttendee attendees={item.attendees} />
+				</Segment>
 				<Segment clearing>
 					<span>{item.description}</span>
 					<Button as={Link} to={`/aktivni/${item.id}`} color="teal" floated="right" content="Pogled" />

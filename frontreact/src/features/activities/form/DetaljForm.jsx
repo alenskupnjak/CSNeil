@@ -58,7 +58,7 @@ function DetaljForm() {
 			history.push(`/aktivni`);
 		}
 	}
-	// submit samop za UI-form
+	// submit samop za UI-form van funkcije
 	function handleSubmitForm(e) {
 		e.preventDefault();
 		if (stanje.id) {
@@ -100,45 +100,53 @@ function DetaljForm() {
 					values: Our form’s current values 
 					Ne treba... ! radi automatskevalue={values.category} ..... onChange={handleChange}
 					*/}
-				{({ handleSubmit, isValid, isSubmitting, dirty }) => (
-					<Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-						<h1 style={{ color: 'red' }}>DetaljiFORM Formic</h1>
-						<FormField>
-							<Field placeholder="Title" name="title" />
-							<ErrorMessage
-								name="title"
-								render={err => {
-									return <Label basic color="red" content={err} />;
-								}}
+				{({ handleSubmit, isValid, isSubmitting, dirty }) => {
+					console.log('%c 01 dirty= ', 'color:green', dirty);
+					console.log('%c 02 isValid= ', 'color:green', isValid);
+					console.log('%c 03 isSubmitting= ', 'color:green', isSubmitting);
+
+					return (
+						<Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
+							<h1 style={{ color: 'gold' }}>DetaljiFORM Formic</h1>
+							<h4>dirty={!dirty}</h4>
+							<FormField>
+								<h4>{dirty}</h4>
+								<Field placeholder="Title" name="title" />
+								<ErrorMessage
+									name="title"
+									render={err => {
+										return <Label basic color="red" content={err} />;
+									}}
+								/>
+							</FormField>
+							<MyTextArea rows={3} placeholder="Opis" name="description" />
+							<MySelectInput options={categoryOptions} placeholder="Kategorija" name="category" />
+							<MyDateInput
+								placeholderText="Date"
+								name="date"
+								showTimeSelect
+								timeCaption="time"
+								dateFormat="MMMM d, yyyy h:mm aa"
 							/>
-						</FormField>
-						<MyTextArea rows={3} placeholder="Opis" name="description" />
-						<MySelectInput options={categoryOptions} placeholder="Kategorija" name="category" />
-						<MyDateInput
-							placeholderText="Date"
-							name="date"
-							showTimeSelect
-							timeCaption="time"
-							dateFormat="MMMM d, yyyy h:mm aa"
-						/>
-						<Header content="Location Details" sub color="teal" />
-						<MyTextInput placeholder="Grad" name="city" />
-						<MyTextInput placeholder="Venue" name="venue" />
-						<Button
-							disabled={isSubmitting || !dirty || !isValid}
-							loading={loading}
-							floated="right"
-							positive
-							type="submit"
-							content="Submit Formik"
-						/>
-						<Button as={Link} to="/aktivni" floated="right" type="button" content="Cancel Formik " />
-					</Form>
-				)}
+							<Header content="Location Details" sub color="teal" />
+							<MyTextInput placeholder="Grad" name="city" />
+							<MyTextInput placeholder="Venue" name="venue" />
+							<Button
+								disabled={isSubmitting || !dirty || !isValid}
+								loading={loading}
+								floated="right"
+								positive
+								type="submit"
+								content="Submit Formik"
+							/>
+							<Button as={Link} to="/aktivni" floated="right" type="button" content="Cancel Formik" />
+						</Form>
+					);
+				}}
 			</Formik>
-			<div style={{ marginTop: '100px' }}>-------- Ispod UI semantic---------------</div>
-			<FormSemanitic onSubmit={handleSubmitForm} autoComplete="off">
-				<h1 style={{ color: 'blue' }}>DetaljiFORM iz UI Semantic</h1>
+
+			{/* <FormSemanitic onSubmit={handleSubmitForm} autoComplete="off">
+				<h1 style={{ color: 'red' }}>Ispod UI semantic NE KORISTI</h1>
 				<FormSemanitic.Input placeholder="Title" value={stanje.title} name="title" onChange={handleInputChange} />
 				<FormSemanitic.TextArea
 					placeholder="Opis"
@@ -163,7 +171,7 @@ function DetaljForm() {
 				<FormSemanitic.Input placeholder="Venue" value={stanje.venue} name="venue" onChange={handleInputChange} />
 				<Button loading={loading} floated="right" positive type="submit" content="Submit" />
 				<Button as={Link} to="/aktivni" floated="right" type="button" content="Cancel" />
-			</FormSemanitic>
+			</FormSemanitic> */}
 		</Segment>
 	);
 }
