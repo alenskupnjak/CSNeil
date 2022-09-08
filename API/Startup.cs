@@ -29,10 +29,7 @@ namespace API
     public Startup(IConfiguration config)
     {
       _config = config;
-      // Configuration = configuration;
     }
-
-    // public IConfiguration Configuration { get; }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -56,7 +53,7 @@ namespace API
 
       services.AddDbContext<DataContext>(opt =>
       {
-        opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
+        opt.UseSqlite(_config.GetConnectionString("StringZaSpajanje"));
       });
 
       //
