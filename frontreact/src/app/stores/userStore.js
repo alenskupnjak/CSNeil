@@ -4,10 +4,11 @@ import agent from '../api/agent';
 import { store } from './store';
 
 export default class UserStore {
-	user = null;
+	// user = null;
 
 	constructor() {
 		makeAutoObservable(this);
+		this.user = null;
 	}
 
 	get isLoggedIn() {
@@ -15,6 +16,7 @@ export default class UserStore {
 	}
 
 	login = async creds => {
+		console.log('%c 036 LOGIN', 'color:green', creds);
 		try {
 			const user = await agent.Account.login(creds);
 			store.commonStore.setToken(user.token);

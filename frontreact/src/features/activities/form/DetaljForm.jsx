@@ -12,7 +12,6 @@ import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
 
-// function DetaljForm(props) {
 // const { createOrEditActivity, snimanje } = props;
 function DetaljForm() {
 	const { activityStore } = useStore();

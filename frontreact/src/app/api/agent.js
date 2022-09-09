@@ -65,7 +65,7 @@ axios.interceptors.response.use(
 axios.interceptors.request.use(config => {
 	const token = store.commonStore.token;
 	if (token) config.headers.Authorization = `Bearer ${token}`;
-	console.log('%c 032 config=', 'color:gold', config);
+	console.log('%c 032 TOKEN podesen config interceptors=', 'color:gold', config);
 	return config;
 });
 

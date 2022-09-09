@@ -19,6 +19,8 @@ const activityImageTextStyle = {
 };
 
 export default observer(function DetaljHeader({ selektiran }) {
+	const { isHost, isGoing } = selektiran;
+	if (!selektiran) return null;
 	return (
 		<Segment.Group>
 			<Segment basic attached="top" style={{ padding: '0' }}>
@@ -30,7 +32,10 @@ export default observer(function DetaljHeader({ selektiran }) {
 								<Header size="huge" content={selektiran.title} style={{ color: 'white' }} />
 								<p>{format(new Date(selektiran.date), 'MM/yyyy')}</p>
 								<p>
-									Hosted by <strong>Bob</strong>
+									Hosted by{' '}
+									<strong>
+										<Link to={`/profiles/${selektiran.host?.username}`}>{selektiran.host?.displayName}</Link>
+									</strong>
 								</p>
 							</Item.Content>
 						</Item>
@@ -38,11 +43,15 @@ export default observer(function DetaljHeader({ selektiran }) {
 				</Segment>
 			</Segment>
 			<Segment clearing attached="bottom">
-				<Button color="teal">Join Activity</Button>
-				<Button>Cancel attendance</Button>
-				<Button as={Link} to={`/manage/${selektiran.id}`} color="orange" floated="right">
-					Manage Event
-				</Button>
+				{isHost ? (
+					<Button as={Link} to={`/manage/${selektiran.id}`} color="orange" floated="right">
+						Manage Event
+					</Button>
+				) : isGoing ? (
+					<Button>Otkaži</Button>
+				) : (
+					<Button color="teal">Join Activity</Button>
+				)}
 			</Segment>
 		</Segment.Group>
 	);

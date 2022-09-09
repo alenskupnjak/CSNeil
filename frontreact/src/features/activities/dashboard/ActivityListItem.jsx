@@ -7,6 +7,8 @@ import { useStore } from '../../../app/stores/store';
 import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 function ActivityListItem({ item, index }) {
+	// console.log('%c 00 item', 'color:red', item);
+
 	// const { activityStore } = useStore();
 	// const { deleteActivity, loading } = activityStore;
 	// const [target, setTarget] = useState('');
@@ -27,7 +29,21 @@ function ActivityListItem({ item, index }) {
 								<Item.Header as={Link} to={`/aktivni/${item.id}`}>
 									{item.title}
 								</Item.Header>
-								<Item.Description>Hosted by Neko</Item.Description>
+								<Item.Description style={{ color: 'red' }}>Domacin je{item.host?.displayName}</Item.Description>
+								{item.isHost && (
+									<Item.Description>
+										<Label basic color="orange">
+											You are hosting this activity
+										</Label>
+									</Item.Description>
+								)}
+								{item.isGoing && !item.isHost && (
+									<Item.Description>
+										<Label basic color="green">
+											Ti ides na taj tulum
+										</Label>
+									</Item.Description>
+								)}
 							</Item.Content>
 						</Item>
 					</Item.Group>

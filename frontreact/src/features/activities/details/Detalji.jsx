@@ -31,33 +31,10 @@ function Detalji(props) {
 				<DetaljChat />
 			</Grid.Column>
 			<Grid.Column width={6}>
-				<DetaljSideBar />
+				<DetaljSideBar selektiran={selektiran} />
 			</Grid.Column>
 		</Grid>
 	);
-
-	// return (
-	// 	<Card fluid>
-	// 		<h1 style={{ color: 'red' }}>Detalji</h1>
-	// 		<Image src={`/assets/categoryImages/${selektiran.category}.jpg`} />
-	// 		<Card.Content>
-	// 			<Card.Header>{selektiran.title}</Card.Header>
-
-	// 			<Card.Meta>
-	// 				<span>{selektiran.date}</span>
-	// 			</Card.Meta>
-	// 			<Card.Description>{selektiran.description}</Card.Description>
-	// 		</Card.Content>
-	// 		<Card.Content extra>
-	// 			<Button.Group widths="2">
-	// 				{/* <Button basic color="blue" content="Edit" onClick={() => openForm(selektiran.id)} /> */}
-	// 				<Button as={Link} to={`/manage/${selektiran.id}`} basic color="blue" content="Edit" />
-	// 				<Button as={Link} to={`/aktivni`} basic color="grey" content="Cancel" />
-	// 				{/* <Button basic color="grey" content="Cancel" onClick={cancelSelectedActivity} /> */}
-	// 			</Button.Group>
-	// 		</Card.Content>
-	// 	</Card>
-	// );
 }
 
 export default observer(Detalji);

@@ -15,7 +15,7 @@ export default observer(function RegisterForm() {
 				displayName: '',
 				username: 'bob',
 				email: 'bob@test.com',
-				password: '12345',
+				password: 'Pa$$w0rd',
 				error: null,
 			}}
 			onSubmit={(values, { setErrors }) => {

@@ -7,8 +7,6 @@ import { useStore } from '../../app/stores/store';
 
 export default observer(function LoginForm() {
 	const { userStore } = useStore();
-	console.log('%c userStore = ', 'color:green', userStore);
-
 	// {isSubmitting}: boolean   FORMIK ugradena funkciaj
 	// Submitting state of the form. Returns true if submission is in progress and false otherwise.
 	// IMPORTANT: Formik will set this to true as soon as submission is attempted.

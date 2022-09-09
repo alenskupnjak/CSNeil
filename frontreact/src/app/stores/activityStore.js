@@ -2,46 +2,59 @@ import { makeAutoObservable, observable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
+import { store } from './store';
 
 export default class ActivityStore {
-	activities = [];
-	selektiran = null; // selectedActivity
+	// activities = [];
+	// selektiran = null; // selectedActivity
 	editMode = false;
 	loading = false;
 	loadingInitial = false;
 
 	constructor() {
 		makeAutoObservable(this);
+		this.activities = [];
+		this.selektiran = null;
 	}
 
 	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
 	loadActivities = async () => {
 		this.activities = [];
-		this.loading = true;
 		try {
-			let activities = await agent.Servisi.listSvih();
+			this.loading = true;
+			const response = await agent.Servisi.listSvih();
 
 			// console.log('%c 01 activities', 'color:red', activities);
 
-			activities = _.sortBy(activities, ['date']);
-
-			activities = _.chain(activities)
-				// Group the elements of Array based on `date` property
-				.groupBy('date')
-				// `key` is group's name (date), `value` is the array of objects
-				.map((value, key) => ({ date: key, data: value }))
-				.value();
-
 			runInAction(() => {
-				activities.forEach(item => {
+				this.activities = _.sortBy(response, ['date']);
+				this.activities = _.chain(this.activities)
+					// Group the elements of Array based on `date` property
+					.groupBy('date')
+					// `key` is group's name (date), `value` is the array of objects
+					.map((value, key) => ({ date: key, podaci: value }))
+					.value();
+
+				this.activities.map(item => {
 					// Ovo je zbog grupiranja ovakav format
 					item.date = item.date.split('T')[0];
-					this.activities.push(item);
+					return item;
 				});
-				console.log('%c 03', 'color:green', this.activities);
+				const user = store.userStore.user;
+				console.log('%c user ', 'color:red', user);
+
+				this.activities.forEach(data => {
+					if (user) {
+						data.podaci[0].isGoing = data.podaci[0]?.attendees.some(a => a.username === user.username);
+						data.podaci[0].isHost = data.podaci[0]?.hostUsername === user.username;
+						data.podaci[0].host = data.podaci[0]?.attendees?.find(x => x.username === data.podaci[0].hostUsername);
+					}
+					return data;
+				});
+				console.log('%c 033  Usnimavanje svih dogadaja ', 'color:green', this.activities);
 			});
 		} catch (err) {
-			console.log('%c err ', 'color:red', err);
+			console.log('%c Greška u activityStore ', 'color:red', err);
 			runInAction(() => {});
 		} finally {
 			// await new Promise(r => setTimeout(r, 2000));
@@ -49,16 +62,28 @@ export default class ActivityStore {
 		}
 	};
 
+	//
 	// Usnimavanje jednog itema
 	loadActivity = async id => {
-		console.log('%c Id Create ', 'color:green', id);
+		this.selektiran = null;
 		this.loadingInitial = true;
 		try {
 			const activity = await agent.Servisi.listaJednog(id);
+			console.log('%c activity ', 'color:gold', activity);
+
 			runInAction(() => {
 				activity.date = activity.date.split('T')[0];
+				// Povlacim logiranog usera
+				const user = store.userStore.user;
+				if (user) {
+					activity.isGoing = activity.attendees.some(a => a.username === user.username);
+					activity.isHost = activity.hostUsername === user.username;
+					activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
+				}
+
 				// activity.date = new Date(activity.date);
 				this.selektiran = activity;
+				console.log('%c 034 loadActivity usnimljen jedan item', 'color:green', this.selektiran);
 			});
 		} catch (err) {
 			console.log('%c error ', 'color:red', err);

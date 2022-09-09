@@ -18,21 +18,21 @@ export default observer(function HomePage() {
 				</Header>
 
 				{userStore.isLoggedIn ? (
-					<>
+					<React.Fragment>
 						<Header as="h2" inverted content="Welcome to Reactivities" />
 						<Button as={Link} to="/aktivni" size="huge" inverted>
 							Go to Activities!
 						</Button>
-					</>
+					</React.Fragment>
 				) : (
-					<>
+					<React.Fragment>
 						<Button onClick={() => modalStore.openModal(<LoginForm />)} size="huge" inverted>
 							Login!
 						</Button>
 						<Button onClick={() => modalStore.openModal(<RegisterForm />)} size="huge" inverted>
 							Register!
 						</Button>
-					</>
+					</React.Fragment>
 				)}
 			</Container>
 		</Segment>
