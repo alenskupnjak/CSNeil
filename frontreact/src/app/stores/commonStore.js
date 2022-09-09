@@ -8,7 +8,7 @@ export default class CommonStore {
 
 	constructor() {
 		makeAutoObservable(this);
-		console.log('%c *** constructor CommonStore ***', 'color:green', this.token);
+		console.log('%c *** AA constructor CommonStore ***', 'color:green');
 
 		reaction(
 			() => this.token,
@@ -32,6 +32,7 @@ export default class CommonStore {
 			this.setAppLoaded();
 		}
 		this.noviUserstore.pokus();
+		// history.push('/');
 	};
 
 	setServerError = error => {

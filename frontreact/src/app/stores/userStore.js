@@ -4,11 +4,15 @@ import agent from '../api/agent';
 import { store } from './store';
 
 export default class UserStore {
-	// user = null;
+	user = null;
+	logiraniUser = window.localStorage.getItem('logiraniUser');
 
 	constructor() {
+		console.log('%c *** AAA constructor UserStore ***', 'color:red', this.user);
 		makeAutoObservable(this);
-		this.user = null;
+		if (this.logiraniUser) {
+			this.login({ email: this.logiraniUser, password: 'Pa$$w0rd' });
+		}
 	}
 
 	get isLoggedIn() {
@@ -20,6 +24,7 @@ export default class UserStore {
 		try {
 			const user = await agent.Account.login(creds);
 			store.commonStore.setToken(user.token);
+			window.localStorage.setItem('logiraniUser', creds.email);
 			runInAction(() => {
 				this.user = user;
 			});
@@ -58,6 +63,7 @@ export default class UserStore {
 		try {
 			const user = await agent.Account.register(creds);
 			store.commonStore.setToken(user.token);
+			window.localStorage.setItem('logiraniUser', user.username);
 			runInAction(() => (this.user = user));
 			history.push('/aktivni');
 			store.modalStore.closeModal();

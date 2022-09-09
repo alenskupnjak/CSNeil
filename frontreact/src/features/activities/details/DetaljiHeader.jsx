@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
 import { format } from 'date-fns';
-// import { Activity } from '../../../app/models/selektiran';
+import { useStore } from '../../../app/stores/store';
 
 const activityImageStyle = {
 	filter: 'brightness(20%)',
@@ -20,6 +20,7 @@ const activityImageTextStyle = {
 
 export default observer(function DetaljHeader({ selektiran }) {
 	const { isHost, isGoing } = selektiran;
+	const { activityStore } = useStore();
 	if (!selektiran) return null;
 	return (
 		<Segment.Group>
@@ -48,9 +49,13 @@ export default observer(function DetaljHeader({ selektiran }) {
 						Manage Event
 					</Button>
 				) : isGoing ? (
-					<Button>Otkaži</Button>
+					<Button loading={activityStore.loading} onClick={activityStore.updateAttendance}>
+						Otkaži
+					</Button>
 				) : (
-					<Button color="teal">Join Activity</Button>
+					<Button loading={activityStore.loading} onClick={activityStore.updateAttendance} color="teal">
+						Join Activity
+					</Button>
 				)}
 			</Segment>
 		</Segment.Group>

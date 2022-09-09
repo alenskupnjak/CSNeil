@@ -82,7 +82,7 @@ axios.interceptors.response.use(async res => {
 });
 
 const request = {
-	// Ovdje nije dobro stavljati catch jer onda ne mozel loviti greske okolo u app
+	// Ovdje nije dobro stavljati catch jer onda ne mozes loviti greske okolo u app
 	get: url => axios.get(url).then(res => res.data),
 	post: (url, body) => axios.post(url, body).then(res => res.data),
 	put: (url, body) => axios.put(url, body).then(res => res),
@@ -95,6 +95,7 @@ const Servisi = {
 	kreiraj: activity => request.post('/ActivitiesTable', activity),
 	update: activity => request.put(`/ActivitiesTable/${activity.id}`, activity),
 	obrisi: id => request.delete(`/ActivitiesTable/${id}`),
+	attend: id => request.post(`/ActivitiesTable/${id}/attend`, {}),
 };
 
 const Account = {

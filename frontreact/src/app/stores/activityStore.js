@@ -5,16 +5,15 @@ import _ from 'lodash';
 import { store } from './store';
 
 export default class ActivityStore {
-	// activities = [];
-	// selektiran = null; // selectedActivity
+	activities = [];
+	selektiran = null; // selectedActivity
 	editMode = false;
 	loading = false;
 	loadingInitial = false;
 
 	constructor() {
+		console.log('%c *** A constructor ActivityStore ***', 'color:green', this.token);
 		makeAutoObservable(this);
-		this.activities = [];
-		this.selektiran = null;
 	}
 
 	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
@@ -166,6 +165,31 @@ export default class ActivityStore {
 			});
 		} catch (err) {
 			console.log('%c err ', 'color:red', err);
+		}
+	};
+
+	// Ikljucuje/iskljucije prisutnost dogaraju
+	updateAttendance = async () => {
+		console.log('%c 00 this.selektiran', 'color:green', this.selektiran);
+		const user = store.userStore.user;
+		this.loading = true;
+		try {
+			await agent.Servisi.attend(this.selektiran.id);
+			runInAction(() => {
+				if (this.selektiran?.isGoing) {
+					this.selektiran.attendees = this.selektiran.attendees?.filter(a => a.username !== user?.username);
+					this.selektiran.isGoing = false;
+				} else {
+					// const attendee = new Profile(user);
+					this.selektiran?.attendees.push(user);
+					this.selektiran.isGoing = true;
+				}
+				// this.activityRegistry.set(this.selektiran.id, this.selektiran)
+			});
+		} catch (error) {
+			console.log(error);
+		} finally {
+			runInAction(() => (this.loading = false));
 		}
 	};
 }

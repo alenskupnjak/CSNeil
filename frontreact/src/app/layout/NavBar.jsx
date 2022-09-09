@@ -18,6 +18,7 @@ function NavBar() {
 				</Menu.Item>
 				<Menu.Item as={NavLink} to="/aktivni" name="Activities" />
 				<Menu.Item as={NavLink} to="/errors" name="Errors" />
+				<Menu.Item onClick={logout} name="Logout" />
 				<Menu.Item>
 					<Button positive content="Create Activity" as={NavLink} to="/createActivity" />
 				</Menu.Item>
