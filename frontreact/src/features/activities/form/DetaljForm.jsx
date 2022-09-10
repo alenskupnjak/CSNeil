@@ -15,7 +15,8 @@ import MyDateInput from '../../../app/common/form/MyDateInput';
 // const { createOrEditActivity, snimanje } = props;
 function DetaljForm() {
 	const { activityStore } = useStore();
-	const { selektiran, createActivity, updateActivity, loading, loadActivity, loadingInitial } = activityStore;
+	const { selektiran, createActivity, updateActivity, loading, loadActivity, loadingInitial, handleSubmitFormik } =
+		activityStore;
 	const { id } = useParams();
 	const history = useHistory();
 
@@ -46,34 +47,33 @@ function DetaljForm() {
 	}, [id, loadActivity]);
 
 	// submit samop za UI-form
-	function handleSubmitFormik(values) {
-		console.log('%c values= ', 'color:green', values);
-
-		if (values.id) {
-			updateActivity(values);
-			history.push(`/aktivni/${values.id}`);
-		} else {
-			createActivity(values);
-			history.push(`/aktivni`);
-		}
-	}
+	// function handleSubmitFormik(values) {
+	// 	console.log('%c values= ', 'color:green', values);
+	// 	if (values.id) {
+	// 		updateActivity(values);
+	// 		history.push(`/aktivni/${values.id}`);
+	// 	} else {
+	// 		createActivity(values);
+	// 		history.push(`/aktivni`);
+	// 	}
+	// }
 	// submit samop za UI-form van funkcije
-	function handleSubmitForm(e) {
-		e.preventDefault();
-		if (stanje.id) {
-			updateActivity(stanje);
-			history.push(`/aktivni/${stanje.id}`);
-		} else {
-			createActivity(stanje);
-			history.push(`/aktivni`);
-		}
-	}
+	// function handleSubmitForm(e) {
+	// 	e.preventDefault();
+	// 	if (stanje.id) {
+	// 		updateActivity(stanje);
+	// 		history.push(`/aktivni/${stanje.id}`);
+	// 	} else {
+	// 		createActivity(stanje);
+	// 		history.push(`/aktivni`);
+	// 	}
+	// }
 
 	// samo za UI-form
-	function handleInputChange(e) {
-		const { name, value } = e.target;
-		setStanje({ ...stanje, [name]: value });
-	}
+	// function handleInputChange(e) {
+	// 	const { name, value } = e.target;
+	// 	setStanje({ ...stanje, [name]: value });
+	// }
 
 	if (loadingInitial) return <LoadingData content="Loading data..u DetaljFORM   005 ....." />;
 
@@ -85,11 +85,11 @@ function DetaljForm() {
 				enableReinitialize
 				initialValues={stanje}
 				onSubmit={async values => {
-					console.log('%c SUBMIT ', 'color:blue', values);
+					console.log('%c SUBMIT SUBMIT SUBMIT ', 'color:orange', values);
 					// Ovo je caka kako napraviti pauzu...
 					// await new Promise(r => setTimeout(r, 2000));
 					// alert(JSON.stringify(values, null, 2));
-					handleSubmitFormik(values);
+					handleSubmitFormik(values, history);
 				}}
 			>
 				{/* 
@@ -100,9 +100,9 @@ function DetaljForm() {
 					Ne treba... ! radi automatskevalue={values.category} ..... onChange={handleChange}
 					*/}
 				{({ handleSubmit, isValid, isSubmitting, dirty }) => {
-					console.log('%c 01 dirty= ', 'color:green', dirty);
-					console.log('%c 02 isValid= ', 'color:green', isValid);
-					console.log('%c 03 isSubmitting= ', 'color:green', isSubmitting);
+					// console.log('%c 01 dirty= ', 'color:green', dirty);
+					// console.log('%c 02 isValid= ', 'color:green', isValid);
+					// console.log('%c 03 isSubmitting= ', 'color:green', isSubmitting);
 
 					return (
 						<Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
@@ -132,7 +132,7 @@ function DetaljForm() {
 							<MyTextInput placeholder="Venue" name="venue" />
 							<Button
 								disabled={isSubmitting || !dirty || !isValid}
-								loading={loading}
+								loading={isSubmitting}
 								floated="right"
 								positive
 								type="submit"

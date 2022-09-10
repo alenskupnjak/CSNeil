@@ -7,6 +7,7 @@ import { useStore } from '../../../app/stores/store';
 import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 function ActivityListItem({ item, index }) {
+	const { activityStore } = useStore();
 	// console.log('%c 00 item', 'color:red', item);
 
 	// const { activityStore } = useStore();
@@ -60,6 +61,7 @@ function ActivityListItem({ item, index }) {
 				</Segment>
 				<Segment clearing>
 					<span>{item.description}</span>
+					<Button onClick={() => activityStore.deleteActivity(item.id)} color="red" floated="right" content="Brisi" />
 					<Button as={Link} to={`/aktivni/${item.id}`} color="teal" floated="right" content="Pogled" />
 				</Segment>
 			</Segment.Group>

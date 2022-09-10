@@ -40,6 +40,7 @@ export default observer(function DetaljHeader({ selektiran }) {
 								</p>
 							</Item.Content>
 						</Item>
+						{selektiran.id}
 					</Item.Group>
 				</Segment>
 			</Segment>

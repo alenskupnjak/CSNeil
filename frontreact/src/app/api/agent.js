@@ -4,16 +4,17 @@ import { history } from '../..';
 import { store } from '../stores/store';
 
 axios.defaults.baseURL = 'http://localhost:5017/api';
-
+// Imitacija requesta
 const sleep = delay => {
 	return new Promise(res => {
 		setTimeout(res, delay);
 	});
 };
 
+// Imitacija rada
 axios.interceptors.response.use(
 	async res => {
-		await sleep(300);
+		await sleep(100);
 		return res;
 	},
 	err => {
@@ -72,8 +73,8 @@ axios.interceptors.request.use(config => {
 // presretac poruka
 axios.interceptors.response.use(async res => {
 	try {
-		console.log('%c Interceptors ', 'color:gold', res);
-		await sleep(200);
+		console.log('%c 037 Interceptors ', 'color:gold', res);
+		await sleep(100);
 		return res;
 	} catch (error) {
 		console.log('%c Greska ', 'color:red', error);

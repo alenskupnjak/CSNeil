@@ -7,7 +7,7 @@ export default class ModalStore {
 	};
 
 	constructor() {
-		console.log('%c *** AAAA constructor CommonStore ***', 'color:green');
+		console.log('%c *** AAAA constructor ModalStore ***', 'color:red');
 		makeAutoObservable(this);
 	}
 

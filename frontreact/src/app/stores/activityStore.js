@@ -12,19 +12,27 @@ export default class ActivityStore {
 	loadingInitial = false;
 
 	constructor() {
-		console.log('%c *** A constructor ActivityStore ***', 'color:green', this.token);
+		console.log('%c *** A constructor ActivityStore ***', 'color:red', this.token);
 		makeAutoObservable(this);
 	}
 
+	handleSubmitFormik = (values, history) => {
+		console.log('%c 043 CREATE createActivity activity ', 'background: #8d6e63; color: #242333', values);
+		if (values.id) {
+			this.updateActivity(values);
+			history.push(`/aktivni/${values.id}`);
+		} else {
+			this.createActivity(values);
+			history.push(`/aktivni`);
+		}
+	};
+
 	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
 	loadActivities = async () => {
-		this.activities = [];
 		try {
+			this.activities = [];
 			this.loading = true;
 			const response = await agent.Servisi.listSvih();
-
-			// console.log('%c 01 activities', 'color:red', activities);
-
 			runInAction(() => {
 				this.activities = _.sortBy(response, ['date']);
 				this.activities = _.chain(this.activities)
@@ -40,8 +48,6 @@ export default class ActivityStore {
 					return item;
 				});
 				const user = store.userStore.user;
-				console.log('%c user ', 'color:red', user);
-
 				this.activities.forEach(data => {
 					if (user) {
 						data.podaci[0].isGoing = data.podaci[0]?.attendees.some(a => a.username === user.username);
@@ -64,12 +70,10 @@ export default class ActivityStore {
 	//
 	// Usnimavanje jednog itema
 	loadActivity = async id => {
-		this.selektiran = null;
-		this.loadingInitial = true;
 		try {
+			this.selektiran = null;
+			this.loadingInitial = true;
 			const activity = await agent.Servisi.listaJednog(id);
-			console.log('%c activity ', 'color:gold', activity);
-
 			runInAction(() => {
 				activity.date = activity.date.split('T')[0];
 				// Povlacim logiranog usera
@@ -82,7 +86,7 @@ export default class ActivityStore {
 
 				// activity.date = new Date(activity.date);
 				this.selektiran = activity;
-				console.log('%c 034 loadActivity usnimljen jedan item', 'color:green', this.selektiran);
+				console.log('%c 034 loadActivity usnimljen 1 item', 'color:green', this.selektiran);
 			});
 		} catch (err) {
 			console.log('%c error ', 'color:red', err);
@@ -91,33 +95,15 @@ export default class ActivityStore {
 		}
 	};
 
-	// Ovo sve ce zamjeniti router
-	// selectActivity = id => {
-	// 	this.selektiran = this.activities.find(data => data.id === id);
-	// };
-
-	// cancelSelectedActivity = () => {
-	// 	this.selektiran = null;
-	// };
-
-	// openForm = id => {
-	// 	id ? this.selectActivity(id) : this.cancelSelectedActivity();
-	// 	this.editMode = true;
-	// };
-
-	// closeForm = () => {
-	// 	this.editMode = false;
-	// };
-
+	// CREATE CREATE CREATE CREATE CREATE
 	createActivity = async aktivnost => {
-		aktivnost.id = uuid();
-		this.loading = true;
-		console.log('%c CREATE', 'color:red', aktivnost);
-
+		console.log('%c 038 CREATE createActivity activity ', 'background: #8d6e63; color: #242333', aktivnost);
 		try {
+			aktivnost.id = uuid();
+			this.loading = true;
 			await agent.Servisi.kreiraj(aktivnost);
 			runInAction(() => {
-				// this.activities.push(aktivnost);
+				this.loadActivities();
 				this.selektiran = null;
 				this.loading = false;
 				this.editMode = false;
@@ -129,7 +115,7 @@ export default class ActivityStore {
 	};
 
 	updateActivity = async aktivnost => {
-		console.log('%c UPDATE', 'color:green', aktivnost);
+		console.log('%c 039 UPDATE createActivity activity ', 'background: #8d6e63; color: #242333', aktivnost);
 		delete aktivnost.attendees;
 
 		this.loading = true;
@@ -151,14 +137,14 @@ export default class ActivityStore {
 		}
 	};
 
+	// DELETE DELETE DELETE DELETE
 	deleteActivity = async id => {
+		console.log('%c 041 DELETE  ', 'background: #8d6e63; color: #242333', id);
 		this.loading = true;
 		try {
 			await agent.Servisi.obrisi(id);
 			runInAction(() => {
-				this.activities = _.filter(this.activities, data => {
-					return data.id !== id;
-				});
+				this.loadActivities();
 				// this.cancelSelectedActivity();
 				this.loading = false;
 				this.editMode = false;
@@ -168,9 +154,9 @@ export default class ActivityStore {
 		}
 	};
 
-	// Ikljucuje/iskljucije prisutnost dogaraju
+	// Iskljucuje/iskljucije prisutnost dogaraju
 	updateAttendance = async () => {
-		console.log('%c 00 this.selektiran', 'color:green', this.selektiran);
+		console.log('%c 040 UPDATE updateAttendance ', 'background: #8d6e63; color: #242333', this.selektiran);
 		const user = store.userStore.user;
 		this.loading = true;
 		try {
@@ -193,3 +179,21 @@ export default class ActivityStore {
 		}
 	};
 }
+
+// Ovo sve ce zamjeniti router
+// selectActivity = id => {
+// 	this.selektiran = this.activities.find(data => data.id === id);
+// };
+
+// cancelSelectedActivity = () => {
+// 	this.selektiran = null;
+// };
+
+// openForm = id => {
+// 	id ? this.selectActivity(id) : this.cancelSelectedActivity();
+// 	this.editMode = true;
+// };
+
+// closeForm = () => {
+// 	this.editMode = false;
+// };
