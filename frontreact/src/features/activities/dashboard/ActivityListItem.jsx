@@ -8,10 +8,6 @@ import ActivityListItemAttendee from './ActivityListItemAttendee';
 
 function ActivityListItem({ item, index }) {
 	const { activityStore } = useStore();
-	// console.log('%c 00 item', 'color:red', item);
-
-	// const { activityStore } = useStore();
-	// const { deleteActivity, loading } = activityStore;
 	// const [target, setTarget] = useState('');
 
 	// function handleDelete(e, id) {
@@ -21,11 +17,19 @@ function ActivityListItem({ item, index }) {
 
 	return (
 		<Fragment>
-			<Segment.Group divided="true">
+			<Segment.Group divided="true" style={{ marginBottom: '30px' }}>
 				<Segment>
+					{item.isCancelled && (
+						<Label
+							attached="top"
+							color="purple"
+							content="Cancelled"
+							style={{ textAlign: 'center', color: '#f44336' }}
+						/>
+					)}
 					<Item.Group>
 						<Item>
-							<Item.Image size="tiny" circular src="/assets/user.png" />
+							<Item.Image style={{ marginBottom: 5 }} size="tiny" circular src="/assets/user.png" />
 							<Item.Content>
 								<Item.Header as={Link} to={`/aktivni/${item.id}`}>
 									{item.title}
@@ -61,7 +65,7 @@ function ActivityListItem({ item, index }) {
 				</Segment>
 				<Segment clearing>
 					<span>{item.description}</span>
-					<Button onClick={() => activityStore.deleteActivity(item.id)} color="red" floated="right" content="Brisi" />
+					<Button onClick={() => activityStore.deleteActivity(item.id)} color="red" floated="left" content="Brisi" />
 					<Button as={Link} to={`/aktivni/${item.id}`} color="teal" floated="right" content="Pogled" />
 				</Segment>
 			</Segment.Group>

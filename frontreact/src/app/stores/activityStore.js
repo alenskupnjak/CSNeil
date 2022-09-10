@@ -166,11 +166,24 @@ export default class ActivityStore {
 					this.selektiran.attendees = this.selektiran.attendees?.filter(a => a.username !== user?.username);
 					this.selektiran.isGoing = false;
 				} else {
-					// const attendee = new Profile(user);
 					this.selektiran?.attendees.push(user);
 					this.selektiran.isGoing = true;
 				}
-				// this.activityRegistry.set(this.selektiran.id, this.selektiran)
+			});
+		} catch (error) {
+			console.log(error);
+		} finally {
+			runInAction(() => (this.loading = false));
+		}
+	};
+
+	cancelActivityToggle = async () => {
+		console.log('%c 045 CANCEL updateAttendance ', 'background: #8d6e63; color: #242333', this.selektiran);
+		this.loading = true;
+		try {
+			await agent.Servisi.attend(this.selektiran.id);
+			runInAction(() => {
+				this.selektiran.isCancelled = !this.selektiran.isCancelled;
 			});
 		} catch (error) {
 			console.log(error);

@@ -2,12 +2,13 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Image, List, Popup } from 'semantic-ui-react';
-// import ProfileCard from '../../profiles/ProfileCard';
+import ProfileCard from '../../profiles/ProfileCard';
 
-export default observer(function ActivityListItemAttendee({ attendees }) {
+function ActivityListItemAttendee({ attendees }) {
+	console.log('%c 00 attendees', 'color:red', attendees);
+	if (!attendees) return;
 	return (
 		<List horizontal>
-			<h2>ajmoo</h2>
 			{attendees.map(attendee => (
 				<Popup
 					hoverable
@@ -18,9 +19,13 @@ export default observer(function ActivityListItemAttendee({ attendees }) {
 						</List.Item>
 					}
 				>
-					<Popup.Content>{/* <ProfileCard profile={attendee} /> */}</Popup.Content>
+					<Popup.Content>
+						<ProfileCard profile={attendee} />
+					</Popup.Content>
 				</Popup>
 			))}
 		</List>
 	);
-});
+}
+
+export default observer(ActivityListItemAttendee);

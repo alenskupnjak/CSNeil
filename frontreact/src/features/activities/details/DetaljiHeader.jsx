@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Header, Item, Segment, Image } from 'semantic-ui-react';
+import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import { useStore } from '../../../app/stores/store';
 
@@ -25,6 +25,14 @@ export default observer(function DetaljHeader({ selektiran }) {
 	return (
 		<Segment.Group>
 			<Segment basic attached="top" style={{ padding: '0' }}>
+				{selektiran.isCancelled && (
+					<Label
+						style={{ position: 'absolute', zIndex: 1000, left: -14, top: 20 }}
+						ribbon
+						color="red"
+						content="Cancelled"
+					/>
+				)}
 				<Image src={`/assets/categoryImages/${selektiran.category}.jpg`} fluid style={activityImageStyle} />
 				<Segment style={activityImageTextStyle} basic>
 					<Item.Group>
@@ -46,15 +54,36 @@ export default observer(function DetaljHeader({ selektiran }) {
 			</Segment>
 			<Segment clearing attached="bottom">
 				{isHost ? (
-					<Button as={Link} to={`/manage/${selektiran.id}`} color="orange" floated="right">
-						Manage Event
-					</Button>
+					<React.Fragment>
+						<Button
+							color={selektiran.isCancelled ? 'green' : 'red'}
+							floated="left"
+							basic
+							content={selektiran.isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
+							onClick={activityStore.cancelActivityToggle}
+							loading={activityStore.loading}
+						/>
+						<Button
+							as={Link}
+							disabled={selektiran.isCancelled}
+							to={`/manage/${selektiran.id}`}
+							color="orange"
+							floated="right"
+						>
+							Uredi Event
+						</Button>
+					</React.Fragment>
 				) : isGoing ? (
 					<Button loading={activityStore.loading} onClick={activityStore.updateAttendance}>
 						Otkaži
 					</Button>
 				) : (
-					<Button loading={activityStore.loading} onClick={activityStore.updateAttendance} color="teal">
+					<Button
+						disabled={selektiran.isCancelled}
+						loading={activityStore.loading}
+						onClick={activityStore.updateAttendance}
+						color="teal"
+					>
 						Join Activity
 					</Button>
 				)}
