@@ -21,10 +21,10 @@ namespace Persistence
 
     }
 
-    // Ovdje je setirana baza
+    // Ovdje je setirana baza sa tabelama
     public DbSet<Activity> ActivitiesTable { get; set; }
     public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
-
+    public DbSet<Photo> Photos { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);

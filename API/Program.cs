@@ -32,7 +32,7 @@ namespace API
       catch (Exception ex)
       {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occured during migraiton");
+        logger.LogError(ex, "An grešla se desila za vrijeme migracije during migraiton");
       }
 
       // Ovdje startamo aplikaciju

@@ -15,9 +15,11 @@ namespace API.Controllers
     protected IMediator MediatorServis => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
 
+    // Kroz ovo prolazi svaki endpoint
     protected ActionResult HandleResult<T>(Result<T> result)
     {
       if (result == null) return NotFound();
+
       // Pronaso rezultat vracam vrijednost
       if (result.IsSuccess && result.Value != null)
         return Ok(result.Value);

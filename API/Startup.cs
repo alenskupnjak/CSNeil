@@ -5,12 +5,12 @@ using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +18,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Persistence;
-using Microsoft.AspNetCore.Http;
 
 namespace API
 {
@@ -68,7 +67,16 @@ namespace API
       // bolja izvedba
       services.AddMediatR(typeof(List.Handler).Assembly);
       services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+      
+      // Koji je user
       services.AddScoped<IUserAccessor, UserAccessor>();
+
+      // Baratanje sa file
+      services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+
+      ///
+      /// Cloudinary za slike..
+      services.Configure<CloudinarySettings>(_config.GetSection("Cloudinary"));
 
       // KOnfiguriranje Identity servisa
       services.AddIdentityServices(_config);
