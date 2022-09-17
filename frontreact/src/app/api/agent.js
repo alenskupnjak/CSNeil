@@ -119,6 +119,7 @@ const Profiles = {
 	},
 	setMainPhoto: id => request.post(`/photos/${id}/setMain`, {}),
 	deletePhoto: id => request.delete(`/photos/${id}`),
+	updateProfile: profile => request.put(`/profiles`, profile),
 };
 
 const agent = {
