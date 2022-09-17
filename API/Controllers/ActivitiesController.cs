@@ -12,8 +12,6 @@ namespace API.Controllers
   public class ActivitiesTableController : BaseApiController
   {
 
-
-
     [HttpGet]
     // ime na kraju  GetActivities moze biti bilo kakvo, nema utjecaja
     public async Task<IActionResult> GetActivities()

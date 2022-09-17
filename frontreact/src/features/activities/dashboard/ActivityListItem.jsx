@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react';
@@ -29,12 +29,20 @@ function ActivityListItem({ item, index }) {
 					)}
 					<Item.Group>
 						<Item>
-							<Item.Image style={{ marginBottom: 5 }} size="tiny" circular src="/assets/user.png" />
+							<Item.Image
+								style={{ marginBottom: 5 }}
+								size="tiny"
+								circular
+								src={item.host?.image || '/assets/user.png'}
+							/>
 							<Item.Content>
 								<Item.Header as={Link} to={`/aktivni/${item.id}`}>
 									{item.title}
 								</Item.Header>
-								<Item.Description style={{ color: 'red' }}>Domacin je{item.host?.displayName}</Item.Description>
+								<Item.Description>
+									Domacin je
+									<Link to={`/profiles/${item.hostUsername}`}>{item.host?.displayName}</Link>
+								</Item.Description>
 								{item.isHost && (
 									<Item.Description>
 										<Label basic color="orange">

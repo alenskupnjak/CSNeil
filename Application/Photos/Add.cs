@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
@@ -11,6 +12,7 @@ using Persistence;
 
 namespace Application.Photos
 {
+  // Dodavanje slike
   public class Add
   {
     public class Command : IRequest<Result<Photo>>
@@ -36,9 +38,7 @@ namespace Application.Photos
             .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
         if (user == null) return null;
-
         var photoUploadResult = await _photoAccessor.AddPhoto(request.File);
-
         var photo = new Photo
         {
           Url = photoUploadResult.Url,
@@ -46,15 +46,17 @@ namespace Application.Photos
         };
 
         if (!user.Photos.Any(x => x.IsMain)) photo.IsMain = true;
-
         user.Photos.Add(photo);
 
         // snimanje u database
         var result = await _context.SaveChangesAsync() > 0;
 
+        // throw new ArgumentOutOfRangeException("Ja sam ubacio ovu gersku");
+
         if (result) return Result<Photo>.Success(photo);
 
-        return Result<Photo>.Failure("Problem adding photo");
+
+        return Result<Photo>.Failure("Problem dodavanje photo");
       }
     }
   }

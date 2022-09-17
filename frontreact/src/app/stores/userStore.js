@@ -5,11 +5,13 @@ import { store } from './store';
 
 export default class UserStore {
 	user = null;
-	logiraniUser = window.localStorage.getItem('logiraniUser');
 
 	constructor() {
 		console.log('%c *** AAA constructor UserStore ***', 'color:red', this.user);
 		makeAutoObservable(this);
+
+		//ovo je za potrebe DEV-a
+		this.logiraniUser = window.localStorage.getItem('logiraniUser');
 		if (this.logiraniUser) {
 			this.login({ email: this.logiraniUser, password: 'Pa$$w0rd' });
 		}
@@ -31,7 +33,7 @@ export default class UserStore {
 			history.push('/aktivni');
 			store.modalStore.closeModal();
 		} catch (error) {
-			throw error;
+			console.log('%c ERROR login', 'color:red');
 		}
 	};
 
@@ -70,5 +72,9 @@ export default class UserStore {
 		} catch (error) {
 			throw error;
 		}
+	};
+
+	setImage = image => {
+		if (this.user) this.user.image = image;
 	};
 }

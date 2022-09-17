@@ -20,6 +20,9 @@ axios.interceptors.response.use(
 	err => {
 		console.log('%c 026 interceptors data=', 'color:green', err.response);
 		const { data, status, config } = err.response;
+		console.log('%c 026A interceptors data=', 'color:green', data);
+		console.log('%c 026AA interceptors status=', 'color:green', status);
+		console.log('%c 026AAA interceptors config=', 'color:green', config);
 
 		switch (status) {
 			case 400:
@@ -43,7 +46,7 @@ axios.interceptors.response.use(
 				}
 				break;
 			case 401:
-				toast.error(' 31 Neautoriziran');
+				toast.error(' 031 Neautoriziran');
 				break;
 			case 404:
 				history.push('/not-found');
@@ -105,9 +108,23 @@ const Account = {
 	register: user => request.post('/account/register', user),
 };
 
+const Profiles = {
+	get: username => request.get(`/profiles/${username}`),
+	uploadPhoto: file => {
+		let formData = new FormData();
+		formData.append('File', file);
+		return axios.post('photos', formData, {
+			headers: { 'Content-type': 'multipart/form-data' },
+		});
+	},
+	setMainPhoto: id => request.post(`/photos/${id}/setMain`, {}),
+	deletePhoto: id => request.delete(`/photos/${id}`),
+};
+
 const agent = {
 	Servisi,
 	Account,
+	Profiles,
 };
 
 export default agent;

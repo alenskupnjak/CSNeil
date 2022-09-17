@@ -15,6 +15,7 @@ import LoginForm from './features/users/LoginForm';
 import { useStore } from './app/stores/store';
 import LoadingData from './app/layout/LoadingData';
 import ModalContainer from './app/common/modals/ModalContainer';
+import ProfilePage from './features/profiles/ProfilePage';
 
 function App() {
 	const location = useLocation();
@@ -46,6 +47,7 @@ function App() {
 								<Route exact path="/aktivni" component={ActivityDashboard} />
 								<Route exact path="/aktivni/:id" component={Detalji} />
 								<Route key={location.key} path={['/createActivity', '/manage/:id']} component={DetaljForm} />
+								<Route path="/profiles/:username" component={ProfilePage} />
 								<Route path={['/errors']} component={TestErrors} />
 								<Route path={['/server-error']} component={ServerError} />
 								<Route path={['/login']} component={LoginForm} />
