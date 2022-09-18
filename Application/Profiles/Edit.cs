@@ -26,6 +26,9 @@ namespace Application.Profiles
       }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
       private readonly DataContext _context;

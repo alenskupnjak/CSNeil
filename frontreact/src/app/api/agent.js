@@ -2,8 +2,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { history } from '../..';
 import { store } from '../stores/store';
+import { CONST } from './constants';
 
-axios.defaults.baseURL = 'http://localhost:5017/api';
+// axios.defaults.baseURL = 'http://localhost:5017/api';
+axios.defaults.baseURL = CONST.backendURL;
 // Imitacija requesta
 const sleep = delay => {
 	return new Promise(res => {

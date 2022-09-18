@@ -4,9 +4,11 @@ import { Button, Header, Segment } from 'semantic-ui-react';
 import axios from 'axios';
 import { useState } from 'react';
 import ValidationErrors from './ValidationErrors';
+import { CONST } from '../../app/api/constants';
 
 function TestErrors() {
-	const baseUrl = 'http://localhost:5017/api/';
+	// const baseUrl = 'http://localhost:5017/api/';
+	const baseUrl = CONST.backendURL;
 	const [errors, setErrors] = useState(null);
 
 	function handleNotFound() {

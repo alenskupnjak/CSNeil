@@ -5,7 +5,6 @@ import { Image, List, Popup } from 'semantic-ui-react';
 import ProfileCard from '../../profiles/ProfileCard';
 
 function ActivityListItemAttendee({ attendees }) {
-	console.log('%c 00 attendees', 'color:gold', attendees);
 	if (!attendees) return;
 	return (
 		<List horizontal>

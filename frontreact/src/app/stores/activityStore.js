@@ -42,11 +42,6 @@ export default class ActivityStore {
 					.map((value, key) => ({ date: key, podaci: value }))
 					.value();
 
-				this.activities.map(item => {
-					// Ovo je zbog grupiranja ovakav format
-					item.date = item.date.split('T')[0];
-					return item;
-				});
 				const user = store.userStore.user;
 				this.activities.forEach(data => {
 					if (user) {
@@ -75,7 +70,6 @@ export default class ActivityStore {
 			this.loadingInitial = true;
 			const activity = await agent.Servisi.listaJednog(id);
 			runInAction(() => {
-				activity.date = activity.date.split('T')[0];
 				// Povlacim logiranog usera
 				const user = store.userStore.user;
 				if (user) {
@@ -83,8 +77,6 @@ export default class ActivityStore {
 					activity.isHost = activity.hostUsername === user.username;
 					activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
 				}
-
-				// activity.date = new Date(activity.date);
 				this.selektiran = activity;
 				console.log('%c 034 loadActivity usnimljen 1 item', 'color:green', this.selektiran);
 			});
@@ -190,6 +182,10 @@ export default class ActivityStore {
 		} finally {
 			runInAction(() => (this.loading = false));
 		}
+	};
+
+	clearSelectedActivity = () => {
+		this.selektiran = null;
 	};
 }
 

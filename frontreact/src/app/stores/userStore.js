@@ -11,10 +11,10 @@ export default class UserStore {
 		makeAutoObservable(this);
 
 		//ovo je za potrebe DEV-a
-		this.logiraniUser = window.localStorage.getItem('logiraniUser');
-		if (this.logiraniUser) {
-			this.login({ email: this.logiraniUser, password: 'Pa$$w0rd' });
-		}
+		// this.logiraniUser = window.localStorage.getItem('logiraniUser');
+		// if (this.logiraniUser) {
+		// 	this.login({ email: this.logiraniUser, password: 'Pa$$w0rd' });
+		// }
 	}
 
 	get isLoggedIn() {
@@ -26,7 +26,7 @@ export default class UserStore {
 		try {
 			const user = await agent.Account.login(creds);
 			store.commonStore.setToken(user.token);
-			window.localStorage.setItem('logiraniUser', creds.email);
+			// window.localStorage.setItem('logiraniUser', creds.email);
 			runInAction(() => {
 				this.user = user;
 			});
@@ -65,7 +65,7 @@ export default class UserStore {
 		try {
 			const user = await agent.Account.register(creds);
 			store.commonStore.setToken(user.token);
-			window.localStorage.setItem('logiraniUser', user.username);
+			// window.localStorage.setItem('logiraniUser', user.username);
 			runInAction(() => (this.user = user));
 			history.push('/aktivni');
 			store.modalStore.closeModal();

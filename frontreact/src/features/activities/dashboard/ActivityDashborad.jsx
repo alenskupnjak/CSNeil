@@ -7,10 +7,12 @@ import LoadingData from '../../../app/layout/LoadingData';
 import ActivityFilters from './ActivityFilters';
 
 function ActivityDashboard(props) {
-	const { activityStore } = useStore();
+	const { activityStore, userStore } = useStore();
 
 	useEffect(() => {
-		activityStore.loadActivities();
+		if (userStore.isLoggedIn) {
+			activityStore.loadActivities();
+		}
 	}, [activityStore]);
 
 	if (activityStore.loading) return <LoadingData content="Loading data list...." />;

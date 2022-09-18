@@ -1,5 +1,6 @@
 using API.Extensions;
 using API.Middleware;
+using API.SignalR;
 using Application.Activities;
 using Application.Core;
 using Application.Interfaces;
@@ -60,7 +61,7 @@ namespace API
         {
           opt.AddPolicy("CorsPolicy", policy =>
           {
-            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3002");
+            policy.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:3002");
           });
         });
 
@@ -77,6 +78,8 @@ namespace API
       ///
       /// Cloudinary za slike..
       services.Configure<CloudinarySettings>(_config.GetSection("Cloudinary"));
+
+      services.AddSignalR();
 
       // KOnfiguriranje Identity servisa
       services.AddIdentityServices(_config);
@@ -116,6 +119,7 @@ namespace API
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHub<ChatHub>("/chat");
       });
     }
   }

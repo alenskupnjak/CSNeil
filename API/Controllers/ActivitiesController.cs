@@ -13,7 +13,6 @@ namespace API.Controllers
   {
 
     [HttpGet]
-    // ime na kraju  GetActivities moze biti bilo kakvo, nema utjecaja
     public async Task<IActionResult> GetActivities()
     {
       return HandleResult(await MediatorServis.Send(new List.Query()));

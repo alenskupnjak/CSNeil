@@ -10,15 +10,16 @@ import DetaljInfo from './DetaljInfo';
 import DetaljChat from './DetaljChat';
 import DetaljSideBar from './DetaljSideBar';
 
+// ActivityDetails u videu
 function Detalji(props) {
-	// ActivityDetails u videu
 	const { activityStore } = useStore();
 	// const { selektiran, openForm, cancelSelectedActivity } = activityStore;
-	const { selektiran, loadActivity, loadingInitial } = activityStore;
+	const { selektiran, loadActivity, loadingInitial, clearSelectedActivity } = activityStore;
 	const { id } = useParams();
 
 	useEffect(() => {
 		if (id) loadActivity(id);
+		return () => clearSelectedActivity();
 	}, [id, loadActivity]);
 
 	if (loadingInitial || !selektiran) return <LoadingData content="Loading data..u Detaljima....." />;
@@ -28,7 +29,7 @@ function Detalji(props) {
 			<Grid.Column width={10}>
 				<DetaljHeader selektiran={selektiran} />
 				<DetaljInfo selektiran={selektiran} />
-				<DetaljChat />
+				<DetaljChat activityId={selektiran.id} />
 			</Grid.Column>
 			<Grid.Column width={6}>
 				<DetaljSideBar selektiran={selektiran} />
