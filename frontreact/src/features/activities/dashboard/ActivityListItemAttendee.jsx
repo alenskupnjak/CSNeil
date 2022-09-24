@@ -6,20 +6,30 @@ import ProfileCard from '../../profiles/ProfileCard';
 
 function ActivityListItemAttendee({ attendees }) {
 	if (!attendees) return;
+	const styles = {
+		borderColor: 'gold',
+		borderWidth: 4,
+	};
 	return (
 		<List horizontal>
-			{attendees.map(attendee => (
+			{attendees.map(data => (
 				<Popup
 					hoverable
-					key={attendee.username}
+					key={data.username}
 					trigger={
-						<List.Item key={attendee.username} as={Link} to={`/profiles/${attendee.username}`}>
-							<Image size="mini" circular src={attendee.image || '/assets/user.png'} />
+						<List.Item key={data.username} as={Link} to={`/profiles/${data.username}`}>
+							<Image
+								size="mini"
+								circular
+								src={data.image || '/assets/user.png'}
+								bordered
+								style={data.following ? styles : null}
+							/>
 						</List.Item>
 					}
 				>
 					<Popup.Content>
-						<ProfileCard profile={attendee} />
+						<ProfileCard profile={data} />
 					</Popup.Content>
 				</Popup>
 			))}

@@ -25,9 +25,11 @@ export default class CommonStore {
 		this.init();
 	}
 
-	init = () => {
+	init = async () => {
 		if (this.token) {
-			this.noviUserstore.getUser().finally(() => this.setAppLoaded());
+			// this.noviUserstore.getUser().finally(() => this.setAppLoaded());
+			await this.noviUserstore.getUser();
+			this.setAppLoaded();
 		} else {
 			this.setAppLoaded();
 		}

@@ -30,18 +30,18 @@ function App() {
 	// 	}
 	// }, [commonStore, userStore]);
 
-	if (!commonStore.appLoaded) return <LoadingData content="Loading APP..." />;
+	// if (!commonStore.appLoaded) return <LoadingData content="Loading Aplikaciju.." />;
 
 	return (
 		<Fragment>
 			<ToastContainer position="bottom-right" />
 			<ModalContainer />
 			<Route exact path="/" component={HomePage} />
+			<NavBar />
 			<Route
 				path={'/(.+)'}
 				render={() => (
 					<div>
-						<NavBar />
 						<Container style={{ marginTop: '100px' }}>
 							<Switch>
 								<Route exact path="/aktivni" component={ActivityDashboard} />

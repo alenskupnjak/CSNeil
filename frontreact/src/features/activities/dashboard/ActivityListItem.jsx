@@ -6,14 +6,8 @@ import { format } from 'date-fns';
 import { useStore } from '../../../app/stores/store';
 import ActivityListItemAttendee from './ActivityListItemAttendee';
 
-function ActivityListItem({ item, index }) {
+function ActivityListItem({ item, domacin }) {
 	const { activityStore } = useStore();
-	// const [target, setTarget] = useState('');
-
-	// function handleDelete(e, id) {
-	// 	setTarget(e.target.name);
-	// 	deleteActivity(id);
-	// }
 
 	return (
 		<Fragment>
@@ -41,7 +35,7 @@ function ActivityListItem({ item, index }) {
 								</Item.Header>
 								<Item.Description>
 									Domacin je
-									<Link to={`/profiles/${item.hostUsername}`}>{item.host?.displayName}</Link>
+									<Link to={`/profiles/${item.hostUsername}`}> {domacin?.displayName}</Link>
 								</Item.Description>
 								{item.isHost && (
 									<Item.Description>

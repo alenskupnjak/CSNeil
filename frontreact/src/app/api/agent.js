@@ -16,7 +16,7 @@ const sleep = delay => {
 // Imitacija rada
 axios.interceptors.response.use(
 	async res => {
-		await sleep(100);
+		// await sleep(100);
 		return res;
 	},
 	err => {
@@ -79,7 +79,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async res => {
 	try {
 		console.log('%c 037 Interceptors ', 'color:gold', res);
-		await sleep(100);
+		// await sleep(100);
 		return res;
 	} catch (error) {
 		console.log('%c Greska ', 'color:red', error);
@@ -122,6 +122,8 @@ const Profiles = {
 	setMainPhoto: id => request.post(`/photos/${id}/setMain`, {}),
 	deletePhoto: id => request.delete(`/photos/${id}`),
 	updateProfile: profile => request.put(`/profiles`, profile),
+	updateFollowing: username => request.post(`/follow/${username}`, {}),
+	listFollowings: (username, predicate) => request.get(`/follow/${username}?predicate=${predicate}`),
 };
 
 const agent = {

@@ -10,11 +10,12 @@ export default class UserStore {
 		console.log('%c *** AAA constructor UserStore ***', 'color:red', this.user);
 		makeAutoObservable(this);
 
-		//ovo je za potrebe DEV-a
-		// this.logiraniUser = window.localStorage.getItem('logiraniUser');
-		// if (this.logiraniUser) {
-		// 	this.login({ email: this.logiraniUser, password: 'Pa$$w0rd' });
-		// }
+		// ovo je za potrebe DEV-a  DEV DEV DEV*************
+		this.logiraniUser = window.localStorage.getItem('logiraniUser');
+
+		if (this.logiraniUser) {
+			this.login({ email: this.logiraniUser, password: 'Pa$$w0rd' });
+		}
 	}
 
 	get isLoggedIn() {
@@ -26,7 +27,7 @@ export default class UserStore {
 		try {
 			const user = await agent.Account.login(creds);
 			store.commonStore.setToken(user.token);
-			// window.localStorage.setItem('logiraniUser', creds.email);
+			window.localStorage.setItem('logiraniUser', creds.email);
 			runInAction(() => {
 				this.user = user;
 			});

@@ -13,7 +13,7 @@ function ActivityList(props) {
 	return (
 		<Fragment>
 			{activities &&
-				activities.map(({ date, podaci }) => {
+				activities.map(({ date, podaci, domacin }) => {
 					return (
 						<div key={uuid()}>
 							<Header sub color="teal">
@@ -21,7 +21,7 @@ function ActivityList(props) {
 							</Header>
 							{podaci &&
 								podaci.map((item, index) => {
-									return <ActivityListItem key={index} item={item} index={index} />;
+									return <ActivityListItem key={index} item={item} domacin={domacin} />;
 								})}
 						</div>
 					);

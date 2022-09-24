@@ -1,12 +1,6 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence
 {
@@ -17,8 +11,6 @@ namespace Persistence
   {
     public DataContext(DbContextOptions options) : base(options)
     {
-
-
     }
 
     // Ovdje je setirana baza sa tabelama
@@ -26,17 +18,20 @@ namespace Persistence
     public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<UserFollowing> UserFollowings { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
 
       builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ActivityId }));
 
+      //
       builder.Entity<ActivityAttendee>()
           .HasOne(u => u.AppUser)
           .WithMany(a => a.Activities)
           .HasForeignKey(aa => aa.AppUserId);
 
+      // ActivityAttendee
       builder.Entity<ActivityAttendee>()
           .HasOne(u => u.Activity)
           .WithMany(a => a.Attendees)
@@ -47,6 +42,20 @@ namespace Persistence
           .HasOne(a => a.Activity)
           .WithMany(c => c.Comments)
           .OnDelete(DeleteBehavior.Cascade);
+
+    //
+      builder.Entity<UserFollowing>(b =>
+      {
+        b.HasKey(k => new { k.ObserverId, k.TargetId });
+        b.HasOne(o => o.Observer)
+            .WithMany(f => f.Followings)
+            .HasForeignKey(o => o.ObserverId)
+            .OnDelete(DeleteBehavior.Cascade);
+        b.HasOne(o => o.Target)
+            .WithMany(f => f.Followers)
+            .HasForeignKey(o => o.TargetId)
+            .OnDelete(DeleteBehavior.Cascade);
+      });
     }
 
   }

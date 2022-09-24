@@ -2,9 +2,9 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { Link } from 'react-router-dom';
 import { Card, Icon, Image } from 'semantic-ui-react';
+import FollowButton from './FollowButton';
 
 function ProfileCard({ profile }) {
-	console.log('%c 16 ', 'color:green', profile);
 	function truncate(str) {
 		if (str) {
 			return str.length > 40 ? str.substring(0, 37) + '...' : str;
@@ -20,8 +20,9 @@ function ProfileCard({ profile }) {
 			</Card.Content>
 			<Card.Content extra>
 				<Icon name="user" />
-				20 followers
+				Sljedbenika {profile.followersCount}
 			</Card.Content>
+			<FollowButton profile={profile} />
 		</Card>
 	);
 }

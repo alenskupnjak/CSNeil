@@ -48,10 +48,10 @@ export default class ActivityStore {
 						data.podaci[0].isGoing = data.podaci[0]?.attendees.some(a => a.username === user.username);
 						data.podaci[0].isHost = data.podaci[0]?.hostUsername === user.username;
 						data.podaci[0].host = data.podaci[0]?.attendees?.find(x => x.username === data.podaci[0].hostUsername);
+						data.domacin = data.podaci[0]?.attendees?.find(x => x.username === data.podaci[0].hostUsername);
 					}
 					return data;
 				});
-				console.log('%c 033  Usnimavanje svih dogadaja ', 'color:green', this.activities);
 			});
 		} catch (err) {
 			console.log('%c Greška u activityStore ', 'color:red', err);
@@ -183,6 +183,19 @@ export default class ActivityStore {
 			runInAction(() => (this.loading = false));
 		}
 	};
+
+	// updateAttendeeFollowing = username => {
+	// 	this.activities.forEach(activity => {
+	// 		console.log('%c 00 activity', 'color:blue', activity);
+
+	// 		activity.podaci[0].attendees.forEach(attendee => {
+	// 			if (attendee.username === username) {
+	// 				attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+	// 				attendee.following = !attendee.following;
+	// 			}
+	// 		});
+	// 	});
+	// };
 
 	clearSelectedActivity = () => {
 		this.selektiran = null;

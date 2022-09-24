@@ -1,19 +1,35 @@
-import { makeAutoObservable, runInAction } from 'mobx';
+import { makeAutoObservable, runInAction, reaction } from 'mobx';
 import agent from '../api/agent';
 import { store } from './store';
+import { history } from '../..';
 
 export default class ProfileStore {
 	profile = null;
 	loadingProfile = false;
 	uploading = false;
 	loading = false;
+	followings = [];
+	loadingFollowings = false;
+	activeTab = 0;
 
 	constructor() {
 		makeAutoObservable(this);
-		console.log('%c 00', 'color:green', this);
-
-		console.log('%c 00 BOOM', 'color:red');
+		reaction(
+			() => this.activeTab,
+			activeTab => {
+				if (activeTab === 3 || activeTab === 4) {
+					const predicate = activeTab === 3 ? 'followers' : 'following';
+					this.loadFollowings(predicate);
+				} else {
+					this.followings = [];
+				}
+			}
+		);
 	}
+
+	setActiveTab = activeTab => {
+		this.activeTab = activeTab;
+	};
 
 	get isCurrentUser() {
 		if (store.userStore.user && this.profile) {
@@ -29,6 +45,11 @@ export default class ProfileStore {
 			const profile = await agent.Profiles.get(username);
 			runInAction(() => {
 				this.profile = profile;
+				console.log('%c 00', 'color:green', this.activeTab);
+
+				// <Route path="/profiles/:username" component={ProfilePage} />
+				// this.activeTab = 3;
+				// history.push(`/profiles/${username}`);
 				this.loadingProfile = false;
 			});
 		} catch (error) {
@@ -112,6 +133,53 @@ export default class ProfileStore {
 		} catch (error) {
 			console.log(error);
 			runInAction(() => (this.loading = false));
+		}
+	};
+
+	updateFollowing = async (username, following) => {
+		this.loading = true;
+		try {
+			await agent.Profiles.updateFollowing(username);
+			// store.activityStore.updateAttendeeFollowing(username);
+			store.activityStore.loadActivities();
+			this.loadProfile(username);
+			// runInAction(() => {
+			// 	if (
+			// 		this.profile &&
+			// 		this.profile.username !== store.userStore.user?.username &&
+			// 		this.profile.username === username
+			// 	) {
+			// 		following ? this.profile.followersCount++ : this.profile.followersCount--;
+			// 		this.profile.following = !this.profile.following;
+			// 	}
+			// 	if (this.profile && this.profile.username === store.userStore.user?.username) {
+			// 		following ? this.profile.followingCount++ : this.profile.followingCount--;
+			// 	}
+			// 	this.followings.forEach(profile => {
+			// 		if (profile.username === username) {
+			// 			profile.following ? profile.followersCount-- : profile.followersCount++;
+			// 			profile.following = !profile.following;
+			// 		}
+			// 	});
+			// });
+			this.loading = false;
+		} catch (error) {
+			console.log(error);
+			runInAction(() => (this.loading = false));
+		}
+	};
+
+	// usnimavanje podataka
+	loadFollowings = async predicate => {
+		this.loadingFollowings = true;
+		try {
+			const followings = await agent.Profiles.listFollowings(this.profile.username, predicate);
+			runInAction(() => {
+				this.followings = followings;
+				this.loadingFollowings = false;
+			});
+		} catch (error) {
+			runInAction(() => (this.loadingFollowings = false));
 		}
 	};
 }

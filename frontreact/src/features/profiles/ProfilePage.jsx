@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../app/layout/LoadingComponent';
 import { useStore } from '../../app/stores/store';
@@ -10,10 +10,18 @@ import ProfileHeader from './ProfileHeader';
 export default observer(function ProfilePage() {
 	const { username } = useParams();
 	const { profileStore } = useStore();
-	const { loadingProfile, loadProfile, profile } = profileStore;
+	const { loadingProfile, loadProfile, profile, setActiveTab } = profileStore;
+	const history = useHistory();
 
 	useEffect(() => {
 		loadProfile(username);
+		console.log('%c 0000000000000000000000000000 ', 'color:green', history);
+		// <Route path="/profiles/:username" component={ProfilePage} />
+		// history.push('/profiles/username');
+
+		return () => {
+			setActiveTab(0);
+		};
 	}, [loadProfile, username]);
 
 	if (loadingProfile) return <LoadingComponent content="Loading profile..." />;

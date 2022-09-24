@@ -10,12 +10,12 @@ function ActivityDashboard(props) {
 	const { activityStore, userStore } = useStore();
 
 	useEffect(() => {
-		if (userStore.isLoggedIn) {
-			activityStore.loadActivities();
-		}
+		// if (userStore.isLoggedIn) {
+		activityStore.loadActivities();
+		// }
 	}, [activityStore]);
 
-	if (activityStore.loading) return <LoadingData content="Loading data list...." />;
+	// if (activityStore.loading) return <LoadingData content="Loading data list...." />;
 
 	return (
 		<Grid>

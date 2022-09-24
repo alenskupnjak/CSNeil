@@ -5,6 +5,8 @@ import { observer } from 'mobx-react-lite';
 
 function DetaljSideBar({ selektiran }) {
 	const { attendees, host } = selektiran;
+	console.log('%c 0000000000000000 ', 'color:green', attendees);
+	console.log('%c 0000000000000000 ', 'color:green', host);
 
 	if (!selektiran) return null;
 	return (
@@ -14,19 +16,20 @@ function DetaljSideBar({ selektiran }) {
 			</Segment>
 			<Segment attached>
 				<List relaxed divided>
-					{attendees.map(attendee => (
-						<Item style={{ position: 'relative' }} key={attendee.username}>
-							{attendee.username === host?.username && (
+					{attendees.map(data => (
+						<Item style={{ position: 'relative' }} key={data.username}>
+							{data.username === host?.username && (
 								<Label style={{ position: 'absolute' }} color="orange" ribbon="right">
 									DOMACIN
 								</Label>
 							)}
-							<Image size="tiny" src={attendee.image || '/assets/user.png'} />
+							<Image size="tiny" src={data.image || '/assets/user.png'} />
 							<Item.Content verticalAlign="middle">
 								<Item.Header as="h3">
-									<Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link>
+									<Link to={`/profiles/${data.username}`}>{data.displayName}</Link>
 								</Item.Header>
-								<Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
+								{data.following && <Item.Extra style={{ color: 'red' }}>Slijedim</Item.Extra>}
+								{data.following && <h2>tu sam</h2>}
 							</Item.Content>
 						</Item>
 					))}
