@@ -10,11 +10,21 @@ export default class ActivityStore {
 	editMode = false;
 	loading = false;
 	loadingInitial = false;
+	pagingParams = { pageNumber: 1, pageSize: 3 };
 
 	constructor() {
 		console.log('%c *** A constructor ActivityStore ***', 'color:red', this.token);
 		makeAutoObservable(this);
 	}
+
+	setPagingParams = pagingParams => {
+		this.pagingParams = pagingParams;
+		console.log('%c setPagingParams ****************************', 'color:green', this.pagingParams);
+	};
+
+	// setPagination = pagination => {
+	// 	this.pagination = pagination;
+	// };
 
 	handleSubmitFormik = (values, history) => {
 		console.log('%c 043 CREATE createActivity activity ', 'background: #8d6e63; color: #242333', values);
@@ -27,14 +37,33 @@ export default class ActivityStore {
 		}
 	};
 
+	get axiosParams() {
+		const params = new URLSearchParams();
+		params.append('pageNumber', this.pagingParams.pageNumber.toString());
+		params.append('pageSize', this.pagingParams.pageSize.toString());
+		// this.predicate.forEach((value, key) => {
+		// 	if (key === 'startDate') {
+		// 		params.append(key, value.toISOString());
+		// 	} else {
+		// 		params.append(key, value);
+		// 	}
+		// });
+		return params;
+	}
+
 	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
 	loadActivities = async () => {
 		try {
 			this.activities = [];
 			this.loading = true;
-			const response = await agent.Servisi.listSvih();
+			const response = await agent.Servisi.listSvih(this.axiosParams);
+
 			runInAction(() => {
-				this.activities = _.sortBy(response, ['date']);
+				this.pagingParams.currentPage = response.currentPage;
+				this.pagingParams.itemsPerPage = response.itemsPerPage;
+				this.pagingParams.totalItems = response.totalItems;
+				this.pagingParams.totalPages = response.totalPages;
+				this.activities = _.sortBy(response.data, ['date']);
 				this.activities = _.chain(this.activities)
 					// Group the elements of Array based on `date` property
 					.groupBy('date')
@@ -68,7 +97,8 @@ export default class ActivityStore {
 		try {
 			this.selektiran = null;
 			this.loadingInitial = true;
-			const activity = await agent.Servisi.listaJednog(id);
+			let activity = await agent.Servisi.listaJednog(id);
+			activity = activity.data;
 			runInAction(() => {
 				// Povlacim logiranog usera
 				const user = store.userStore.user;

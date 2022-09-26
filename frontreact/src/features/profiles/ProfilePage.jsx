@@ -15,9 +15,9 @@ export default observer(function ProfilePage() {
 
 	useEffect(() => {
 		loadProfile(username);
-		console.log('%c 0000000000000000000000000000 ', 'color:green', history);
+		console.log('%c 0000000000000000000000000000 ', 'color:green', history.location);
 		// <Route path="/profiles/:username" component={ProfilePage} />
-		// history.push('/profiles/username');
+		history.push(history.location);
 
 		return () => {
 			setActiveTab(0);

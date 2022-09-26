@@ -44,9 +44,7 @@ export default class ProfileStore {
 		try {
 			const profile = await agent.Profiles.get(username);
 			runInAction(() => {
-				this.profile = profile;
-				console.log('%c 00', 'color:green', this.activeTab);
-
+				this.profile = profile.data;
 				// <Route path="/profiles/:username" component={ProfilePage} />
 				// this.activeTab = 3;
 				// history.push(`/profiles/${username}`);
@@ -175,7 +173,7 @@ export default class ProfileStore {
 		try {
 			const followings = await agent.Profiles.listFollowings(this.profile.username, predicate);
 			runInAction(() => {
-				this.followings = followings;
+				this.followings = followings.data;
 				this.loadingFollowings = false;
 			});
 		} catch (error) {

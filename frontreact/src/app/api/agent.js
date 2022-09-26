@@ -16,6 +16,14 @@ const sleep = delay => {
 // Imitacija rada
 axios.interceptors.response.use(
 	async res => {
+		const pagination = res.headers['pagination'] && JSON.parse(res.headers['pagination']);
+		if (pagination) {
+			res.currentPage = pagination.currentPage;
+			res.itemsPerPage = 3;
+			res.totalItems = pagination.totalItems;
+			res.totalPages = pagination.totalPages;
+		}
+
 		// await sleep(100);
 		return res;
 	},
@@ -89,14 +97,14 @@ axios.interceptors.response.use(async res => {
 
 const request = {
 	// Ovdje nije dobro stavljati catch jer onda ne mozes loviti greske okolo u app
-	get: url => axios.get(url).then(res => res.data),
+	get: url => axios.get(url).then(res => res),
 	post: (url, body) => axios.post(url, body).then(res => res.data),
 	put: (url, body) => axios.put(url, body).then(res => res),
-	delete: url => axios.delete(url).then(res => res.data),
+	delete: url => axios.delete(url).then(res => res),
 };
 
 const Servisi = {
-	listSvih: () => request.get('/ActivitiesTable'),
+	listSvih: params => axios.get('/ActivitiesTable', { params }).then(res => res),
 	listaJednog: id => request.get(`/ActivitiesTable/${id}`),
 	kreiraj: activity => request.post('/ActivitiesTable', activity),
 	update: activity => request.put(`/ActivitiesTable/${activity.id}`, activity),

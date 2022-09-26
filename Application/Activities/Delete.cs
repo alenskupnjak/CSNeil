@@ -36,6 +36,7 @@ namespace Application.Activities
 
         if (!result) return Result<Unit>.Failure("Nisam uspio obrisati zapis");
 
+        //return Result<Unit>.Success(Unit.Value);
         return Result<Unit>.Success(Unit.Value);
 
         // doslovno vraca nista

@@ -8,7 +8,6 @@ function NavBar() {
 	const {
 		userStore: { user, logout },
 	} = useStore();
-	console.log('%c 000000000000000000000000000000000000000000000000000000 ', 'color:red');
 	return (
 		<Menu inverted fixed="top">
 			<Container>
