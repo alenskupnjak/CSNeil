@@ -20,9 +20,6 @@ export default class ActivityStore {
 		reaction(
 			() => this.predicate,
 			() => {
-				console.log('%c 00 BOOM BOOM BOOM BOOM', 'color:red');
-
-				// this.pagingParams = new PagingParams();
 				this.pagingParams = { pageNumber: 1, pageSize: 3 };
 				this.loadActivities();
 			}
@@ -77,8 +74,6 @@ export default class ActivityStore {
 		const params = new URLSearchParams();
 		params.append('pageNumber', this.pagingParams.pageNumber.toString());
 		params.append('pageSize', this.pagingParams.pageSize.toString());
-		console.log('%c************************** this.predicate=', 'color:red', this.predicate);
-
 		Object.entries(this.predicate).forEach(([key, val]) => {
 			if (key === 'startDate') {
 				params.append(key, val.toISOString());

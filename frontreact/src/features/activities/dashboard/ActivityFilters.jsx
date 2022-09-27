@@ -8,9 +8,7 @@ function ActivityFilters() {
 	const {
 		activityStore: { predicate, setPredicate },
 	} = useStore();
-	const d = new Date('January 14, 2012');
-	console.log('%c 000000000000000000 ', 'color:green', predicate.startDate);
-
+	const d = new Date('January 14, 2022');
 	return (
 		<React.Fragment>
 			<Menu vertical size="large" style={{ width: '100%', marginTop: 25 }}>

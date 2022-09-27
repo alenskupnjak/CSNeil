@@ -31,7 +31,6 @@ function ActivityDashboard(props) {
 	}
 
 	useEffect(() => {
-		console.log('%c 17  pagingParams ', 'color:green', pagingParams);
 		setPagingParams({
 			...pagingParams,
 			pageSize: 3,
