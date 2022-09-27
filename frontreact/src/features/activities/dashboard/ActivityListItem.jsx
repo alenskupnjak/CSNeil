@@ -58,7 +58,7 @@ function ActivityListItem({ item, domacin }) {
 				<Segment>
 					<span>
 						<Icon name="clock" /> {format(new Date(item.date), 'dd-MM-yyyy')}
-						<Icon name="clock" /> {item.date}
+						{/* <Icon name="clock" /> {item.date} */}
 						<Icon name="marker" /> {item.venue}
 					</span>
 				</Segment>

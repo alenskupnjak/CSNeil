@@ -22,12 +22,13 @@ export default class CommentStore {
 
 			this.hubConnection.start().catch(error => console.log('Error establishing the connection: ', error));
 			this.hubConnection.on('LoadComments', comments => {
-				console.log('%c hubConnection LoadComments =', 'color:red');
+				console.log('%c 01 hubConnection LoadComments =', 'color:red', comments);
 				runInAction(() => {
 					comments.forEach(comment => {
 						comment.createdAt = new Date(comment.createdAt + 'Z');
 					});
 					this.comments = comments;
+					console.log('%c 02 hubConnection LoadComments =', 'color:red', this.comments);
 				});
 			});
 			this.hubConnection.on('ReceiveComment', comment => {

@@ -6,10 +6,11 @@ import { useStore } from '../../../app/stores/store';
 import LoadingData from '../../../app/layout/LoadingData';
 import ActivityFilters from './ActivityFilters';
 import InfiniteScroll from 'react-infinite-scroller';
+import ActivityListItemPlaceholder from './ActivityListItemPlaceholder';
 
 function ActivityDashboard(props) {
 	const { activityStore, userStore } = useStore();
-	const { loadActivities, setPagingParams, pagingParams } = activityStore;
+	const { loadActivities, setPagingParams, pagingParams, loadingInitial } = activityStore;
 	const [loadingNext, setLoadingNext] = useState(false);
 
 	function handleGetNext(smjer) {
@@ -46,43 +47,45 @@ function ActivityDashboard(props) {
 	return (
 		<Grid>
 			<Grid.Column width="10">
-				{/* {activityStore.loadingInitial && !loadingNext ? (
+				{loadingInitial && !loadingNext ? (
 					<React.Fragment>
 						<ActivityListItemPlaceholder />
 						<ActivityListItemPlaceholder />
 					</React.Fragment>
-				) : ( */}
-				<InfiniteScroll
-					pageStart={0}
-					loadMore={handleGetNext}
-					hasMore={!loadingNext && !!pagingParams && pagingParams.currentPage < pagingParams.totalPages}
-					initialLoad={false}
-				>
-					<ActivityList />
-				</InfiniteScroll>
-				{/* )} */}
-				{/* <ActivityList /> */}
-				{/* <Button
-					floated="right"
-					content="Next..."
-					positive
-					onClick={() => handleGetNext(1)}
-					disabled={pagingParams.pageSize > pagingParams.totalItems}
-				/>
-				<Button
-					floated="right"
-					content="Prev..."
-					positive
-					onClick={() => handleGetNext(-1)}
-					disabled={pagingParams.itemsPerPage === pagingParams.pageSize}
-				/> */}
+				) : (
+					<InfiniteScroll
+						pageStart={0}
+						loadMore={handleGetNext}
+						hasMore={!loadingNext && !!pagingParams && pagingParams.currentPage < pagingParams.totalPages}
+						initialLoad={false}
+					>
+						<ActivityList />
+					</InfiniteScroll>
+				)}
 			</Grid.Column>
 			<Grid.Column width="6">{<ActivityFilters />}</Grid.Column>
-			<Grid.Column width={10}>
+			{/* <Grid.Column width={10}>
 				<Loader active={loadingNext} />
-			</Grid.Column>
+			</Grid.Column> */}
 		</Grid>
 	);
 }
 
 export default observer(ActivityDashboard);
+
+// {/* )} */}
+// {/* <ActivityList /> */}
+// {/* <Button
+// 	floated="right"
+// 	content="Next..."
+// 	positive
+// 	onClick={() => handleGetNext(1)}
+// 	disabled={pagingParams.pageSize > pagingParams.totalItems}
+// />
+// <Button
+// 	floated="right"
+// 	content="Prev..."
+// 	positive
+// 	onClick={() => handleGetNext(-1)}
+// 	disabled={pagingParams.itemsPerPage === pagingParams.pageSize}
+// /> */}

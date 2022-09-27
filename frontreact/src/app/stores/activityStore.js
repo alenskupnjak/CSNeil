@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable, runInAction } from 'mobx';
+import { makeAutoObservable, observable, runInAction, reaction } from 'mobx';
 import agent from '../api/agent';
 import { v4 as uuid } from 'uuid';
 import _ from 'lodash';
@@ -11,20 +11,56 @@ export default class ActivityStore {
 	loading = false;
 	loadingInitial = false;
 	pagingParams = { pageNumber: 1, pageSize: 3 };
+	predicate = { startDate: new Date() };
 
 	constructor() {
 		console.log('%c *** A constructor ActivityStore ***', 'color:red', this.token);
 		makeAutoObservable(this);
+
+		reaction(
+			() => this.predicate,
+			() => {
+				console.log('%c 00 BOOM BOOM BOOM BOOM', 'color:red');
+
+				// this.pagingParams = new PagingParams();
+				this.pagingParams = { pageNumber: 1, pageSize: 3 };
+				this.loadActivities();
+			}
+		);
 	}
 
 	setPagingParams = pagingParams => {
 		this.pagingParams = pagingParams;
-		console.log('%c setPagingParams ****************************', 'color:green', this.pagingParams);
 	};
 
-	// setPagination = pagination => {
-	// 	this.pagination = pagination;
-	// };
+	setPredicate = (predicate, value) => {
+		const resetPredicate = () => {
+			Object.entries(this.predicate).forEach(([key, val]) => {
+				console.log('%c 17', 'color:gold', value, key);
+				if (key !== 'startDate') delete this.predicate[key];
+			});
+		};
+
+		switch (predicate) {
+			case 'all':
+				resetPredicate();
+				this.predicate = { ...this.predicate, all: true };
+				break;
+			case 'isGoing':
+				resetPredicate();
+				this.predicate = { ...this.predicate, isGoing: true };
+				break;
+			case 'isHost':
+				resetPredicate();
+				this.predicate = { ...this.predicate, isHost: true };
+				break;
+			case 'startDate':
+				delete this.predicate['startDate'];
+				this.predicate = { ...this.predicate, startDate: value };
+			default:
+			// nista
+		}
+	};
 
 	handleSubmitFormik = (values, history) => {
 		console.log('%c 043 CREATE createActivity activity ', 'background: #8d6e63; color: #242333', values);
@@ -41,23 +77,25 @@ export default class ActivityStore {
 		const params = new URLSearchParams();
 		params.append('pageNumber', this.pagingParams.pageNumber.toString());
 		params.append('pageSize', this.pagingParams.pageSize.toString());
-		// this.predicate.forEach((value, key) => {
-		// 	if (key === 'startDate') {
-		// 		params.append(key, value.toISOString());
-		// 	} else {
-		// 		params.append(key, value);
-		// 	}
-		// });
+		console.log('%c************************** this.predicate=', 'color:red', this.predicate);
+
+		Object.entries(this.predicate).forEach(([key, val]) => {
+			if (key === 'startDate') {
+				params.append(key, val.toISOString());
+			} else {
+				params.append(key, val);
+			}
+		});
 		return params;
 	}
 
 	//  Usnimavanje svih dogadaja, ne iz memorije kako je autor radio
 	loadActivities = async () => {
 		try {
+			this.loadingInitial = true;
 			this.activities = [];
 			this.loading = true;
 			const response = await agent.Servisi.listSvih(this.axiosParams);
-
 			runInAction(() => {
 				this.pagingParams.currentPage = response.currentPage;
 				this.pagingParams.itemsPerPage = response.itemsPerPage;
@@ -88,6 +126,7 @@ export default class ActivityStore {
 		} finally {
 			// await new Promise(r => setTimeout(r, 2000));
 			this.loading = false;
+			this.loadingInitial = false;
 		}
 	};
 
@@ -107,6 +146,7 @@ export default class ActivityStore {
 					activity.isHost = activity.hostUsername === user.username;
 					activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
 				}
+				// activity.date = new Date(activity.date);
 				this.selektiran = activity;
 				console.log('%c 034 loadActivity usnimljen 1 item', 'color:green', this.selektiran);
 			});

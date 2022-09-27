@@ -43,6 +43,7 @@ function DetaljForm() {
 		if (id) {
 			loadActivity(id);
 			selektiran && setStanje(selektiran);
+			console.log('%c xxxxxxxxxxxxxxxxxxxxxxxxxxxx ', 'color:green', stanje);
 		}
 	}, [id, loadActivity]);
 
@@ -125,7 +126,7 @@ function DetaljForm() {
 								name="date"
 								showTimeSelect
 								timeCaption="time"
-								dateFormat="MMMM d, yyyy h:mm aa"
+								dateFormat="MMMM d, yyyy  h:mm aa"
 							/>
 							<Header content="Location Details" sub color="teal" />
 							<MyTextInput placeholder="Grad" name="city" />

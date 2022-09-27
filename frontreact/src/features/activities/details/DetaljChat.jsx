@@ -66,8 +66,6 @@ function DetaljChat({ activityId }) {
 				<Comment.Group>
 					{commentStore &&
 						commentStore.comments.map(comment => {
-							// console.log('%c 00 ', 'color:blue', comment.createdAt);
-
 							return (
 								<Comment key={comment.id}>
 									<Comment.Avatar src={comment.image || '/assets/user.png'} />
