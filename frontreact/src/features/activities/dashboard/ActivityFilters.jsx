@@ -8,12 +8,14 @@ function ActivityFilters() {
 	const {
 		activityStore: { predicate, setPredicate },
 	} = useStore();
+
 	const d = new Date('January 14, 2022');
+
 	return (
 		<React.Fragment>
 			<Menu vertical size="large" style={{ width: '100%', marginTop: 25 }}>
 				<Header icon="filter" attached color="teal" content="Filters" />
-				<Menu.Item content="All Activites" active={predicate.all} onClick={() => setPredicate('all', 'true')} />
+				<Menu.Item content="Sve Aktivnosti" active={predicate.all} onClick={() => setPredicate('all', 'true')} />
 				<Menu.Item content="I'm going" active={predicate.isGoing} onClick={() => setPredicate('isGoing', 'true')} />
 				<Menu.Item content="I'm hosting" active={predicate.isHost} onClick={() => setPredicate('isHost', 'true')} />
 			</Menu>

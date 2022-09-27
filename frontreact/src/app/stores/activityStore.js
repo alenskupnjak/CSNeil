@@ -249,19 +249,6 @@ export default class ActivityStore {
 		}
 	};
 
-	// updateAttendeeFollowing = username => {
-	// 	this.activities.forEach(activity => {
-	// 		console.log('%c 00 activity', 'color:blue', activity);
-
-	// 		activity.podaci[0].attendees.forEach(attendee => {
-	// 			if (attendee.username === username) {
-	// 				attendee.following ? attendee.followersCount-- : attendee.followersCount++;
-	// 				attendee.following = !attendee.following;
-	// 			}
-	// 		});
-	// 	});
-	// };
-
 	clearSelectedActivity = () => {
 		this.selektiran = null;
 	};
