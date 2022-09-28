@@ -11,6 +11,8 @@ export default class ProfileStore {
 	followings = [];
 	loadingFollowings = false;
 	activeTab = 0;
+	userActivities = [];
+	loadingActivities = false;
 
 	constructor() {
 		makeAutoObservable(this);
@@ -178,6 +180,22 @@ export default class ProfileStore {
 			});
 		} catch (error) {
 			runInAction(() => (this.loadingFollowings = false));
+		}
+	};
+
+	loadUserActivities = async (username, predicate) => {
+		this.loadingActivities = true;
+		try {
+			const activities = await agent.Profiles.listActivities(username, predicate);
+			runInAction(() => {
+				this.userActivities = activities.data;
+				this.loadingActivities = false;
+			});
+		} catch (error) {
+			console.log(error);
+			runInAction(() => {
+				this.loadingActivities = false;
+			});
 		}
 	};
 }

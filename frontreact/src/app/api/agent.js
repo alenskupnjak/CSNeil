@@ -132,6 +132,7 @@ const Profiles = {
 	updateProfile: profile => request.put(`/profiles`, profile),
 	updateFollowing: username => request.post(`/follow/${username}`, {}),
 	listFollowings: (username, predicate) => request.get(`/follow/${username}?predicate=${predicate}`),
+	listActivities: (username, predicate) => request.get(`/profiles/${username}/aktivnosti?predicate=${predicate}`),
 };
 
 const agent = {
