@@ -16,6 +16,7 @@ import { useStore } from './app/stores/store';
 import LoadingData from './app/layout/LoadingData';
 import ModalContainer from './app/common/modals/ModalContainer';
 import ProfilePage from './features/profiles/ProfilePage';
+import PrivateRoute from './app/layout/PrivateRoute';
 
 function App() {
 	const location = useLocation();
@@ -44,10 +45,10 @@ function App() {
 					<div>
 						<Container style={{ marginTop: '100px' }}>
 							<Switch>
-								<Route exact path="/aktivni" component={ActivityDashboard} />
-								<Route exact path="/aktivni/:id" component={Detalji} />
-								<Route key={location.key} path={['/createActivity', '/manage/:id']} component={DetaljForm} />
-								<Route path="/profiles/:username" component={ProfilePage} />
+								<PrivateRoute exact path="/aktivni" component={ActivityDashboard} />
+								<PrivateRoute exact path="/aktivni/:id" component={Detalji} />
+								<PrivateRoute key={location.key} path={['/createActivity', '/manage/:id']} component={DetaljForm} />
+								<PrivateRoute path="/profiles/:username" component={ProfilePage} />
 								<Route path={['/errors']} component={TestErrors} />
 								<Route path={['/server-error']} component={ServerError} />
 								<Route path={['/login']} component={LoginForm} />
