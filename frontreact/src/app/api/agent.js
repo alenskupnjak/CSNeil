@@ -5,7 +5,11 @@ import { store } from '../stores/store';
 import { CONST } from './constants';
 
 // axios.defaults.baseURL = 'http://localhost:5017/api';
-axios.defaults.baseURL = CONST.backendURL;
+// axios.defaults.baseURL = CONST.backendURL;
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
+console.log('%c 00', 'color:gold', axios.defaults.baseURL);
+
 // Imitacija requesta
 const sleep = delay => {
 	return new Promise(res => {
