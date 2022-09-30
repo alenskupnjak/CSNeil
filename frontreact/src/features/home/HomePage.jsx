@@ -21,7 +21,7 @@ export default observer(function HomePage() {
 					<React.Fragment>
 						<Header as="h2" inverted content="Welcome to Reactivities" />
 						<Button as={Link} to="/aktivni" size="huge" inverted>
-							Go to Activities!
+							DOMA
 						</Button>
 					</React.Fragment>
 				) : (

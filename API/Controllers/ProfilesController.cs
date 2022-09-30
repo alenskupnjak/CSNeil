@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+
+  /// <summary>
+  /// /profiles/{username}
+  /// </summary>
   public class ProfilesController : BaseApiController
   {
-    [HttpGet("{username}")]
+    [HttpGet("")]
     public async Task<IActionResult> GetProfile(string username)
     {
       return HandleResult(await MediatorServis.Send(new Details.Query { Username = username }));

@@ -5,6 +5,7 @@
 
 
 appsettings.json
+/API/wwwroot
 
 # User-specific files
 *.rsuser
