@@ -42,10 +42,14 @@ export default class ProfileStore {
 
 	// LOAD LOAD LOAD
 	loadProfile = async username => {
+		console.log('%c username username username', 'color:gold', username);
+
 		this.loadingProfile = true;
 		try {
 			const profile = await agent.Profiles.get(username);
 			runInAction(() => {
+				console.log('%c 00000000000000000000000000000', 'color:green', profile.data);
+
 				this.profile = profile.data;
 				// <Route path="/profiles/:username" component={ProfilePage} />
 				// this.activeTab = 3;
@@ -54,12 +58,14 @@ export default class ProfileStore {
 			});
 		} catch (error) {
 			console.log(error);
+			console.log('%c loadProfile', 'color:red', error);
 			runInAction(() => (this.loadingProfile = false));
 		}
 	};
 
 	// Usnimavanje slike
 	uploadPhoto = async file => {
+		console.log('----------------------------', file);
 		this.uploading = true;
 		try {
 			const response = await agent.Profiles.uploadPhoto(file);
@@ -185,6 +191,8 @@ export default class ProfileStore {
 
 	loadUserActivities = async (username, predicate) => {
 		this.loadingActivities = true;
+		console.log('%c loadUserActivities =', 'color:green', username, predicate);
+
 		try {
 			const activities = await agent.Profiles.listActivities(username, predicate);
 			runInAction(() => {

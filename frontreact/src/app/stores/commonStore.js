@@ -13,7 +13,6 @@ export default class CommonStore {
 		reaction(
 			() => this.token,
 			token => {
-				console.log('%c 035 BOOM TOKEN', 'color:red', token);
 				if (token) {
 					window.localStorage.setItem('jwt', token);
 				} else {

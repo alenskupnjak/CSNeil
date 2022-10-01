@@ -9,6 +9,8 @@ export default function PhotoUploadWidget({ loading, uploadPhoto }) {
 
 	function onCrop() {
 		if (cropper) {
+			console.log('%c TU je problem ', 'color:green', cropper);
+
 			cropper.getCroppedCanvas().toBlob(blob => uploadPhoto(blob));
 		}
 	}

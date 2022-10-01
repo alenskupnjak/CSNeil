@@ -68,7 +68,7 @@ namespace API
       // bolja izvedba
       services.AddMediatR(typeof(List.Handler).Assembly);
       services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-      
+
       // Koji je user
       services.AddScoped<IUserAccessor, UserAccessor>();
 
@@ -111,8 +111,8 @@ namespace API
       app.UseRouting();
 
       // za react aplikaciju
-      app.UseDefaultFiles();
-      app.UseStaticFiles();
+      // app.UseDefaultFiles();
+      // app.UseStaticFiles();
 
       // mora biti iza routing !!
       app.UseCors("CorsPolicy");
@@ -124,7 +124,7 @@ namespace API
       {
         endpoints.MapControllers();
         endpoints.MapHub<ChatHub>("/chat");
-        endpoints.MapFallbackToController("Index", "Fallback");
+        // endpoints.MapFallbackToController("Index", "Fallback");
       });
     }
   }

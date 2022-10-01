@@ -8,7 +8,7 @@ import { CONST } from './constants';
 // axios.defaults.baseURL = CONST.backendURL;
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-console.log('%c 000000000000000000', 'color:gold', axios.defaults.baseURL);
+console.log('%c process.env', 'color:gold', process.env);
 
 // Imitacija requesta
 const sleep = delay => {
@@ -83,14 +83,13 @@ axios.interceptors.response.use(
 axios.interceptors.request.use(config => {
 	const token = store.commonStore.token;
 	if (token) config.headers.Authorization = `Bearer ${token}`;
-	console.log('%c 032 TOKEN podesen config interceptors=', 'color:gold', config);
 	return config;
 });
 
 // presretac poruka
 axios.interceptors.response.use(async res => {
 	try {
-		console.log('%c 037 Interceptors ', 'color:gold', res);
+		// console.log('%c 037 Interceptors ', 'color:gold', res);
 		// await sleep(100);
 		return res;
 	} catch (error) {

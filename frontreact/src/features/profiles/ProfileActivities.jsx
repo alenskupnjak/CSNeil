@@ -15,11 +15,9 @@ function ProfileActivities() {
 	const { profileStore } = useStore();
 	const { loadUserActivities, profile, loadingActivities, userActivities } = profileStore;
 
-	console.log('%c 00 userActivities ', 'color:red', userActivities);
-
 	useEffect(() => {
 		loadUserActivities(profile.username);
-	}, [loadUserActivities, profile]);
+	}, []);
 
 	const handleTabChange = (e, data) => {
 		loadUserActivities(profile.username, panes[data.activeIndex].pane.key);
@@ -42,7 +40,7 @@ function ProfileActivities() {
 						{userActivities.map(activity => (
 							<Card as={Link} to={`/activities/${activity.id}`} key={activity.id}>
 								<Image
-									src={`/assets/categoryImages/${activity.category}.jpg`}
+									src={`${process.env.PUBLIC_URL}/assets/categoryImages/${activity.category}.jpg`}
 									style={{ minHeight: 100, objectFit: 'cover' }}
 								/>
 								<Card.Content>

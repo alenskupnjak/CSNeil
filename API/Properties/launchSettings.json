@@ -1,33 +1,33 @@
 ﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:53720",
-      "sslPort": 44384
-    }
-  },
-  "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": false,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "POKUS_ENV":" Pokusni develoment"
-      }
-    },
-    "API": {
-      "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5017",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "POKUS_ENV": " Pokusni develoment"
-      }
-    }
-  }
+	"$schema": "http://json.schemastore.org/launchsettings.json",
+	"iisSettings": {
+		"windowsAuthentication": false,
+		"anonymousAuthentication": true,
+		"iisExpress": {
+			"applicationUrl": "http://localhost:53720",
+			"sslPort": 44384
+		}
+	},
+	"profiles": {
+		"IIS Express": {
+			"commandName": "IISExpress",
+			"launchBrowser": false,
+			"launchUrl": "swagger",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"POKUS_ENV": " Pokusni develoment"
+			}
+		},
+		"API": {
+			"commandName": "Project",
+			"dotnetRunMessages": "true",
+			"launchBrowser": false,
+			"launchUrl": "swagger",
+			"applicationUrl": "http://localhost:5017",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development",
+				"POKUS_ENV": " Pokusni develoment"
+			}
+		}
+	}
 }
