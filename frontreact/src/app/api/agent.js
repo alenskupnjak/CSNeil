@@ -81,6 +81,8 @@ axios.interceptors.response.use(
 );
 
 axios.interceptors.request.use(config => {
+	console.log('%c 100 PUBLIC_URL PUBLIC_URL', 'color:green', process.env.PUBLIC_URL);
+
 	const token = store.commonStore.token;
 	if (token) config.headers.Authorization = `Bearer ${token}`;
 	return config;

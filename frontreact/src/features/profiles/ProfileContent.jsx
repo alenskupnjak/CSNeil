@@ -13,8 +13,8 @@ function ProfileContent({ profile }) {
 		{ menuItem: 'About', render: () => <ProfileAbout /> },
 		{ menuItem: 'Photos', render: () => <ProfilePhotos profile={profile} /> },
 		{ menuItem: 'Events', render: () => <ProfileActivities /> },
-		{ menuItem: 'Followers - Koje slijedim', render: () => <ProfileFollowings /> },
-		{ menuItem: 'Following- koji me slijede', render: () => <ProfileFollowings /> },
+		{ menuItem: 'Followers - Koji MENE Slijede', render: () => <ProfileFollowings /> },
+		{ menuItem: 'Following- Koje JA slijedim', render: () => <ProfileFollowings /> },
 	];
 
 	return (

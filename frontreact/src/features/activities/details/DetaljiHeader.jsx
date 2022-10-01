@@ -33,7 +33,11 @@ export default observer(function DetaljHeader({ selektiran }) {
 						content="Cancelled"
 					/>
 				)}
-				<Image src={`/assets/categoryImages/${selektiran.category}.jpg`} fluid style={activityImageStyle} />
+				<Image
+					src={`${process.env.PUBLIC_URL}/assets/categoryImages/${selektiran.category}.jpg`}
+					fluid
+					style={activityImageStyle}
+				/>
 				<Segment style={activityImageTextStyle} basic>
 					<Item.Group>
 						<Item>
