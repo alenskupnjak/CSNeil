@@ -14,8 +14,10 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import ScrollToTop from './app/layout/ScrollToTop';
 
-// export const history = createBrowserHistory({ npm startbasename: '/react/neil' });
-export const history = createBrowserHistory();
+//  https://skryvets.com/blog/2018/09/20/an-elegant-solution-of-deploying-react-app-into-a-subdirectory/
+export const history = createBrowserHistory({ basename: process.env.PUBLIC_URL });
+
+// export const history = createBrowserHistory();
 
 ReactDOM.render(
 	// <React.StrictMode>s

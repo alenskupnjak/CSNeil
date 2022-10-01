@@ -40,7 +40,7 @@ function ProfileActivities() {
 						{userActivities.map(activity => (
 							<Card as={Link} to={`/activities/${activity.id}`} key={activity.id}>
 								<Image
-									src={`${process.env.PUBLIC_URL}/assets/categoryImages/${activity.category}.jpg`}
+									src={`./assets/categoryImages/${activity.category}.jpg`}
 									style={{ minHeight: 100, objectFit: 'cover' }}
 								/>
 								<Card.Content>

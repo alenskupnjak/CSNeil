@@ -8,8 +8,6 @@ import { CONST } from './constants';
 // axios.defaults.baseURL = CONST.backendURL;
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-console.log('%c process.env', 'color:gold', process.env);
-
 // Imitacija requesta
 const sleep = delay => {
 	return new Promise(res => {
@@ -81,8 +79,6 @@ axios.interceptors.response.use(
 );
 
 axios.interceptors.request.use(config => {
-	console.log('%c 100 PUBLIC_URL PUBLIC_URL', 'color:green', process.env.PUBLIC_URL);
-
 	const token = store.commonStore.token;
 	if (token) config.headers.Authorization = `Bearer ${token}`;
 	return config;

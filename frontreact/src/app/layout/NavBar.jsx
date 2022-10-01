@@ -12,8 +12,8 @@ function NavBar() {
 		<Menu inverted fixed="top">
 			<Container>
 				<Menu.Item as={NavLink} to="/" exact header>
-					<img src={`${process.env.PUBLIC_URL}/assets/logo.png`} alt="logo" style={{ marginRight: '50px' }} />
-					Aktivnosti
+					<img src="./assets/logo.png" alt="logo" style={{ marginRight: '50px' }} />
+					Aktivnosti 001
 				</Menu.Item>
 				<Menu.Item as={NavLink} to="/aktivni" name="Activities" />
 				<Menu.Item as={NavLink} to="/errors" name="Errors" />
@@ -22,7 +22,7 @@ function NavBar() {
 					<Button positive content="Create Activity" as={NavLink} to="/createActivity" />
 				</Menu.Item>
 				<Menu.Item position="right">
-					<Image src={user?.image || `${process.env.PUBLIC_URL}/assets/user.png`} avatar spaced="right" />
+					<Image src={user?.image || `./assets/user.png`} avatar spaced="right" />
 					<Dropdown pointing="top left" text={user?.displayName}>
 						<Dropdown.Menu>
 							<Dropdown.Item as={Link} to={`/profiles/${user?.username}`} text="My Profile" icon="user" />
