@@ -110,9 +110,9 @@ namespace API
 
       app.UseRouting();
 
-      // za react aplikaciju
-      // app.UseDefaultFiles();
-      // app.UseStaticFiles();
+      // za REACT aplikaciju
+      app.UseDefaultFiles();
+      app.UseStaticFiles();
 
       // mora biti iza routing !!
       app.UseCors("CorsPolicy");
@@ -124,7 +124,7 @@ namespace API
       {
         endpoints.MapControllers();
         endpoints.MapHub<ChatHub>("/chat");
-        // endpoints.MapFallbackToController("Index", "Fallback");
+        endpoints.MapFallbackToController("Index", "Fallback");
       });
     }
   }
