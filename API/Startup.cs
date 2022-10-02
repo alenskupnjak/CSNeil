@@ -53,7 +53,8 @@ namespace API
 
       services.AddDbContext<DataContext>(opt =>
       {
-        opt.UseSqlite(_config.GetConnectionString("StringZaSpajanje"));
+        //opt.UseSqlite(_config.GetConnectionString("StringZaSpajanje"));   // SQLite
+        opt.UseNpgsql(_config.GetConnectionString("StringZaSpajanje"));     // PostgreSQL
       });
 
       //
