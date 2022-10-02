@@ -5,8 +5,6 @@ import { observer } from 'mobx-react-lite';
 
 function DetaljSideBar({ selektiran }) {
 	const { attendees, host } = selektiran;
-	console.log('%c 0000000000000000 ', 'color:green', attendees);
-	console.log('%c 0000000000000000 ', 'color:green', host);
 
 	if (!selektiran) return null;
 	return (
@@ -23,7 +21,7 @@ function DetaljSideBar({ selektiran }) {
 									DOMACIN
 								</Label>
 							)}
-							<Image size="tiny" src={data.image || '/assets/user.png'} />
+							<Image size="tiny" src={data.image || './assets/user.png'} />
 							<Item.Content verticalAlign="middle">
 								<Item.Header as="h3">
 									<Link to={`/profiles/${data.username}`}>{data.displayName}</Link>

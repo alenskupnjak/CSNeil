@@ -42,16 +42,11 @@ export default class ProfileStore {
 
 	// LOAD LOAD LOAD
 	loadProfile = async username => {
-		console.log('%c username username username', 'color:gold', username);
-
 		this.loadingProfile = true;
 		try {
 			const profile = await agent.Profiles.get(username);
 			runInAction(() => {
-				console.log('%c 00000000000000000000000000000', 'color:green', profile.data);
-
 				this.profile = profile.data;
-				// <Route path="/profiles/:username" component={ProfilePage} />
 				// this.activeTab = 3;
 				// history.push(`/profiles/${username}`);
 				this.loadingProfile = false;
