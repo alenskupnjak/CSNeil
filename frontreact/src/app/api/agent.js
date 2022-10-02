@@ -8,6 +8,8 @@ import { CONST } from './constants';
 // axios.defaults.baseURL = CONST.backendURL;
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
+console.log('%c 00 axios.defaults.baseURL', 'color:blue', axios.defaults.baseURL);
+
 // Imitacija requesta
 const sleep = delay => {
 	return new Promise(res => {

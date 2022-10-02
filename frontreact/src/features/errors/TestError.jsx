@@ -7,35 +7,33 @@ import ValidationErrors from './ValidationErrors';
 import { CONST } from '../../app/api/constants';
 
 function TestErrors() {
-	// const baseUrl = 'http://localhost:5017/api/';
-	const baseUrl = process.env.REACT_APP_API_URL;
 	const [errors, setErrors] = useState(null);
 
 	function handleNotFound() {
-		axios.get(baseUrl + 'buggy/not-found').catch(err => console.log('014', err.response));
+		axios.get('/buggy/not-found').catch(err => console.log('014', err.response));
 	}
 
 	function handleBadRequest() {
-		axios.get(baseUrl + 'buggy/bad-request').catch(err => {
+		axios.get('/buggy/bad-request').catch(err => {
 			console.log('015', err.response);
 			setErrors(null);
 		});
 	}
 
 	function handleServerError() {
-		axios.get(baseUrl + 'buggy/server-error').catch(err => console.log('016', err.response));
+		axios.get('/buggy/server-error').catch(err => console.log('016', err.response));
 	}
 
 	function handleUnauthorised() {
-		axios.get(baseUrl + 'buggy/unauthorised').catch(err => console.log('017', err.response));
+		axios.get('/buggy/unauthorised').catch(err => console.log('017', err.response));
 	}
 
 	function handleBadGuid() {
-		axios.get(baseUrl + 'ActivitiesTable/NEMAguid').catch(err => console.log('018', err));
+		axios.get('/ActivitiesTable/NEMAguid').catch(err => console.log('018', err));
 	}
 
 	function handleValidationError() {
-		axios.post(baseUrl + 'ActivitiesTable', {}).catch(err => {
+		axios.post('/ActivitiesTable', {}).catch(err => {
 			console.log('019 ajmoo', err);
 			setErrors(err);
 		});
