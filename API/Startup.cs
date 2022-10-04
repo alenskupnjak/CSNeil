@@ -53,8 +53,9 @@ namespace API
 
       services.AddDbContext<DataContext>(opt =>
       {
-        //opt.UseSqlite(_config.GetConnectionString("StringZaSpajanje"));   // SQLite
-        opt.UseNpgsql(_config.GetConnectionString("StringZaSpajanje"));     // PostgreSQL
+        //opt.UseSqlite(_config.GetConnectionString("StringSQLite"));   // SQLite
+        //opt.UseNpgsql(_config.GetConnectionString("StringPostgres"));     // PostgreSQL
+        opt.UseSqlServer(_config.GetConnectionString("StringMSSQL"));     // MSSQL
       });
 
       //
@@ -112,8 +113,8 @@ namespace API
       app.UseRouting();
 
       // za REACT aplikaciju
-      app.UseDefaultFiles();
-      app.UseStaticFiles();
+      //app.UseDefaultFiles();
+      //app.UseStaticFiles();
 
       // mora biti iza routing !!
       app.UseCors("CorsPolicy");
@@ -125,7 +126,7 @@ namespace API
       {
         endpoints.MapControllers();
         endpoints.MapHub<ChatHub>("/chat");
-        endpoints.MapFallbackToController("Index", "Fallback");
+        //endpoints.MapFallbackToController("Index", "Fallback");
       });
     }
   }
