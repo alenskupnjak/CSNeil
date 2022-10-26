@@ -12,15 +12,12 @@ import { ToastContainer } from 'react-toastify';
 import NotFound from './features/errors/NotFound';
 import ServerError from './features/errors/ServerError';
 import LoginForm from './features/users/LoginForm';
-import { useStore } from './app/stores/store';
-import LoadingData from './app/layout/LoadingData';
 import ModalContainer from './app/common/modals/ModalContainer';
 import ProfilePage from './features/profiles/ProfilePage';
 import PrivateRoute from './app/layout/PrivateRoute';
 
 function App() {
 	const location = useLocation();
-	const { commonStore, userStore } = useStore();
 
 	// napravio sam preko stora ne volim useEffect
 	// useEffect(() => {
