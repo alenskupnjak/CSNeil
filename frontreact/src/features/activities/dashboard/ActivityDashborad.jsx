@@ -49,7 +49,6 @@ function ActivityDashboard(props) {
 				{loadingInitial && !loadingNext ? (
 					<React.Fragment>
 						<ActivityListItemPlaceholder />
-						<ActivityListItemPlaceholder />
 					</React.Fragment>
 				) : (
 					<InfiniteScroll

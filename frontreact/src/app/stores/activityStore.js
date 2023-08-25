@@ -74,6 +74,7 @@ export default class ActivityStore {
 		const params = new URLSearchParams();
 		params.append('pageNumber', this.pagingParams.pageNumber.toString());
 		params.append('pageSize', this.pagingParams.pageSize.toString());
+		console.log('%c 00', 'color:red', this.predicate);
 		Object.entries(this.predicate).forEach(([key, val]) => {
 			if (key === 'startDate') {
 				params.append(key, val.toISOString());
@@ -81,6 +82,8 @@ export default class ActivityStore {
 				params.append(key, val);
 			}
 		});
+		console.log('%c 00', 'color:red', params);
+
 		return params;
 	}
 
@@ -91,6 +94,8 @@ export default class ActivityStore {
 			this.activities = [];
 			this.loading = true;
 			const response = await agent.Servisi.listSvih(this.axiosParams);
+			console.log('%c 555555555555555', 'color:green', response.data);
+
 			runInAction(() => {
 				this.pagingParams.currentPage = response.currentPage;
 				this.pagingParams.itemsPerPage = response.itemsPerPage;
